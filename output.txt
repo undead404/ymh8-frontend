@@ -1,0 +1,1444 @@
+yarn run v1.22.22
+$ tsx src/prepare-graph/index.ts
+🔹 Починаємо обробку 1375 жанрів...
+🔹 Будуємо зв'язки та фільтруємо слабкі...
+🔹 Додано 6870 оптимізованих ребер.
+🔹 Розфарбовуємо кластери (Louvain)...
+🔹 Запуск 3D симуляції...
+🔹 Зберігаємо результат...
+0
+pop
+electronic
+electropop
+female vocalists
+synthpop
+dance
+art pop
+trip-hop
+house
+ambient
+electronica
+downtempo
+synthwave
+dance-pop
+chillout
+disco
+indietronica
+ambient pop
+idm
+drum and bass
+teen pop
+bubblegum bass
+new rave
+dark pop
+hyperpop
+dubstep
+edm
+electro house
+chillwave
+french
+swedish
+techno
+boy band
+electro
+nu-disco
+alternative dance
+uk garage
+lounge
+8-bit
+future garage
+chiptune
+instrumental hip-hop
+folktronica
+electroclash
+progressive house
+trance
+deep house
+big beat
+plunderphonics
+acid jazz
+breakbeat
+future bass
+tropical house
+2-step
+eurodance
+glitch pop
+deconstructed club
+psytrance
+glitch
+brostep
+bubblegum pop
+japan
+vaporwave
+nu jazz
+new zealand
+french house
+bitpop
+indie electronic
+euro house
+ambient techno
+riot grrrl
+indie dance
+experimental pop
+europop
+sound effects
+france
+sweden
+avant-pop
+tango
+soundscape
+ambient house
+mashup
+goa
+drill and bass
+complextro
+tech house
+hi-nrg
+chanson
+rave
+post-dubstep
+minimal techno
+progressive electronic
+belgian
+belgium
+chanson francaise
+chill house
+miami bass
+sound collage
+freestyle
+acid house
+french pop
+chillstep
+x-mas
+musique concrete
+dreamwave
+dutch
+microhouse
+new romantic
+chillhop
+progressive trance
+acid techno
+nordic folk
+breaks
+eurovision
+canada
+space age pop
+darksynth
+retrowave
+book
+vocal trance
+future funk
+psychill
+rock francais
+ghettotech
+justice
+balearic
+melodic house
+alternative electronic
+happy hardcore
+country christmas
+ambient electronic
+neurofunk
+bass house
+paris
+psybient
+eurobeat
+toronto
+liquid funk
+field recordings
+hardstyle
+minimal house
+broken beat
+drag
+breakbeat hardcore
+electroacoustic
+uk funky
+drumstep
+future house
+funky house
+hard trance
+charts
+italo disco
+downbeat
+outsider house
+tribal
+french indie
+parisienne
+pop francaise
+francais
+sverige
+urbain
+exotica
+space ambient
+experimental electronic
+venezuela
+nu-bluz
+dub techno
+romanian
+netherlands
+disco house
+quebec
+belarusian
+uplifting trance
+experimental techno
+montreal
+goa trance
+organic electronica
+north carolina
+bassline
+francophone
+ambient dub
+detroit techno
+austria
+bristol
+hard house
+nouvelle scene francaise
+nederlandstalig
+science fiction
+progressive breaks
+darkstep
+spacesynth
+drill n bass
+uk hardcore
+deep and dark
+french rock
+hard dance
+psydub
+ambience
+lithuanian
+jump up
+bitcore
+progressive psytrance
+russian pop
+melodic trance
+keyboard
+riddim
+deep techno
+lds
+emd
+progressive ambient
+polish jazz
+ambient trance
+ibiza
+techstep
+tech trance
+vocal house
+soulful house
+nederlands
+hard techno
+synthesizer
+ambient electronica
+svensk
+belarus
+old school hardcore
+berlin school
+garage house
+indian fusion
+chicago house
+new generation freestyle
+tribal ambient
+lattice
+microsound
+trip
+sextrance
+tango argentino
+switzerland
+melodic techno
+deep ambient
+epic trance
+drum
+didgeridoo
+braindance
+deep dubstep
+estonian
+darkpsy
+estonia
+demoscene
+pacific
+gamelan
+male and female
+tekno
+live set
+psycore
+
+
+1
+78 revival
+
+
+2
+soundtrack
+post-rock
+instrumental
+piano
+icelandic
+classical
+contemporary classical
+new age
+neoclassical
+postclassical
+minimalism
+impressionism
+orchestral
+iceland
+guitar virtuoso
+instrumental rock
+classical crossover
+animals
+contemporary piano
+minimal ambient
+experimental-ambient
+piano ambient
+minimal piano
+baroque
+opera
+composer
+strings
+choral
+meditation
+requiem
+choir
+percussion
+harp
+solo piano
+a capella
+contemporary instrumental
+orchestra
+czech
+soprano
+symphony
+classical piano
+brass
+flute
+native american
+piano solo
+organ
+shred
+ballet
+mantra
+harpsichord
+classical guitar
+waltz
+melbourne
+yoga
+string quartet
+lieder
+spanish guitar
+zen
+viola da gamba
+conductor
+chant
+mass
+pipe organ
+tenor
+piano sonata
+lute
+recorder
+musique francaise
+oratorio
+sacred
+late romantic
+chamber
+czech classical
+american classical
+italian opera
+potpourri
+cantata
+oboe
+serialism
+sonata
+italian baroque
+classical composer
+classical violin
+quartet
+classical christmas
+clavecin
+violin sonata
+liederzyklus
+operette
+baroque francais
+
+
+3
+hip-hop
+rap
+trap
+alternative rnb
+neo-soul
+pop rap
+cloud rap
+west coast hip hop
+experimental hip hop
+jazz rap
+conscious hip hop
+emo rap
+gangsta rap
+southern hip hop
+hardcore hip hop
+contemporary rnb
+east coast hip hop
+boom bap
+abstract hip hop
+alternative hip hop
+plugg
+industrial hip hop
+horrorcore
+glitch hop
+rap rock
+east coast rap
+west coast rap
+memphis rap
+witch house
+dirty south
+trap metal
+g-funk
+turntablism
+alternative rap
+lgbt
+underground hip-hop
+los angeles
+lo-fi indie
+grime
+christian rap
+hardcore rap
+uk hip hop
+drumless
+pluggnb
+midwest rap
+digicore
+crunk
+atlanta
+new york
+phonk
+east coast
+chicago
+southern rap
+british hip hop
+spiritual
+underground rap
+jazz hop
+moombahton
+detroit
+ohio
+jay z
+english hip hop
+michigan
+brooklyn
+bounce
+vaportrap
+irish hip hop
+cleveland
+avantgarde pop
+bay area
+houston
+polish hip-hop
+chopped and screwed
+madlib
+french rap
+oakland
+texas
+female rapper
+philadelphia
+memphis
+polski hip hop
+detroit rap
+nerdcore
+russian rap
+polski rap
+chicano rap
+san francisco
+minnesota
+rap francais
+midwest
+new jersey
+avanthop
+minneapolis
+houston rap
+lobit
+romanian trap
+rappeuse
+
+
+4
+folk
+singer-songwriter
+indie folk
+acoustic
+country
+folk pop
+folk rock
+country pop
+americana
+irish
+alt-country
+chamber folk
+country rock
+contemporary folk
+freak folk
+folk punk
+psychedelic folk
+sadcore
+anti-folk
+celtic
+world
+bluegrass
+new weird america
+celtic punk
+western
+alternative country
+balkan
+contemporary country
+gypsy
+alternative folk
+progressive folk
+avant-folk
+outlaw country
+classic country
+folk noir
+gothic country
+dream folk
+acoustic guitar
+african
+acoustic pop
+viola
+africa
+traditional country
+woman
+mali
+acoustic blues
+ukulele
+irish folk
+country blues
+celtic rock
+tishoumaren
+ethnic
+svenskt
+accordion
+arabic
+world fusion
+slide guitar
+late 90s country
+klezmer
+pagan
+pagan folk
+honky tonk
+british folk
+takamba
+celtic folk
+banjo
+algeria
+acid folk
+south african
+nashville
+hungarian
+oud
+traditional
+vancouver
+fingerstyle guitar
+western swing
+south africa
+experimental folk
+ethno
+oriental
+rai
+english folk
+fiddle
+serbian
+magyar
+tunisia
+north africa
+romania
+hungary
+haiti
+maghreb
+breizh
+bulgarian
+serbia
+kurdish
+morocco
+kurdistan
+macedonian
+galiza
+
+
+5
+electronic lounge jazz
+groove lounge
+lounge uptempo
+acid lounge
+alternative lounge
+uutta jazzia
+smooth lounge
+chillout downtempo
+lounge downtempo
+downtempo groove
+lounge groove
+downtempo lounge
+
+
+6
+rock
+alternative rock
+alternative
+indie rock
+indie pop
+pop rock
+pop punk
+dream pop
+classic rock
+britpop
+hard rock
+british
+grunge
+progressive rock
+new wave
+psychedelic rock
+soft rock
+post-punk
+shoegaze
+art rock
+baroque pop
+neo-psychedelia
+lo-fi
+psychedelic pop
+chamber pop
+jangle pop
+alternative pop
+blues rock
+bedroom pop
+garage rock
+american
+funk rock
+slowcore
+power pop
+post-grunge
+gothic rock
+glam rock
+noise pop
+piano rock
+progressive pop
+alt pop
+experimental rock
+slacker rock
+post-punk revival
+manchester
+southern rock
+noise rock
+australian
+garage rock revival
+dance-punk
+love metal
+sasscore
+doomergaze
+space rock
+rock opera
+funk metal
+usa
+twee pop
+old
+electronic rock
+crank wave
+glam metal
+finnish
+unplugged
+roots rock
+symphonic rock
+rock n roll
+modern rock
+adult contemporary
+blue-eyed soul
+hypnagogic pop
+english
+polish
+proto-punk
+hair metal
+garage punk
+ethereal wave
+duet
+chamber rock
+sunshine pop
+college rock
+scottish
+art punk
+rockabilly
+acoustic rock
+dark cabaret
+surf rock
+arena rock
+brazilian rock
+danish
+surf
+desert rock
+krautrock
+album rock
+comedy rock
+latin rock
+acid rock
+goth rock
+cabaret
+seattle
+british rock
+psychobilly
+space rock revival
+yacht rock
+punk pop
+garage
+k-rock
+london
+rock nacional
+american indie
+polish rock
+england
+welsh
+jam band
+new prog
+british invasion
+arcade fire
+ween
+jam
+punk revival
+ireland
+rock alternativo
+boston
+synth rock
+atmospheric rock
+british blues
+poland
+austrian
+occult rock
+turkish
+turkish rock
+alternativo
+real post-hardcore
+gothic pop
+austropop
+american underground
+symphonic prog
+indie punk
+electronic pop
+male singer songwriter
+glam punk
+indie emo
+new york city
+pub rock
+polskie
+protest
+avant-prog
+beat
+dansk
+melodic rock
+finland
+dark rock
+america
+danish poprock
+portland
+microtonal
+westcoast
+throwaway grrls
+scotland
+spanish rock
+washington
+turkish pop
+austin
+sleaze rock
+live recording
+canterbury scene
+melodic hard rock
+karlsruhe
+guitar rock
+neo-prog
+diy
+suomi
+suomipop
+guitarist
+baltimore
+denmark
+polska
+glasgow
+suomirock
+latvian
+noise punk
+y2k prog
+experimental indie
+drone rock
+sheffield
+maryland
+turkey
+britain
+ambient rock
+concert
+bagpipes
+liverpool
+avant-rock
+zeuhl
+dansk pop rock
+live show
+one man band
+oregon
+leeds
+us indie
+west coast underground
+one man project
+patriotic
+polski
+crossover prog
+suomisaundi
+dada
+british underground
+
+
+7
+rnb
+soul
+funk
+jazz
+blues
+vocal jazz
+rhythm and blues
+jazz fusion
+swing
+pop soul
+traditional pop
+oldies
+sophisti-pop
+easy listening
+motown
+afrobeat
+new jack swing
+jazz-funk
+smooth jazz
+slow jams
+jazz rock
+cool jazz
+fusion
+crooners
+philly soul
+american idol
+contemporary jazz
+bebop
+jazz piano
+bass
+hard bop
+big band
+jazz guitar
+post-bop
+boogie
+avant-garde jazz
+delta blues
+spiritual jazz
+calypso
+double bass
+new orleans
+piano jazz
+proto-vaporwave
+improvisation
+jazz trio
+mastersinger
+electric blues
+gypsy jazz
+chamber jazz
+soul jazz
+chicago blues
+afro-cuban
+vibraphone
+electric guitar
+harmonica
+modern jazz
+northern soul
+trio
+jazz bass
+traditional jazz
+jazz trumpet
+trombone
+clarinet
+fusion jazz
+jazz saxophone
+dixieland
+ragtime
+horn
+buffalo
+hammond
+harmonica blues
+nigeria
+louisiana
+western new york
+piano trio
+harmolodic
+cajun
+jazz double bass
+jazz organ
+new thing
+world guitar
+zydeco
+baritone
+european jazz
+
+
+8
+industrial metal
+industrial
+industrial rock
+ethereal
+sampling
+drone
+darkwave
+dark ambient
+breakcore
+noise
+ebm
+electro-industrial
+atmospheric drum and bass
+dark folk
+coldwave
+footwork
+digital hardcore
+jungle
+nightcore
+post-industrial
+synth punk
+hardcore breaks
+electropunk
+neofolk
+futurepop
+dungeon synth
+dark jazz
+gabber
+cyberpunk
+minimal synth
+minimal wave
+neoclassical darkwave
+aggrotech
+apocalyptic folk
+dark electro
+ambient industrial
+mashcore
+illbient
+drone metal
+martial industrial
+cyber metal
+harsh ebm
+steampunk
+death industrial
+ritual ambient
+speedcore
+industrial techno
+dancecore
+doomgaze
+juke
+rhythmic noise
+neomedieval
+techno-industrial
+medieval folk
+schranz
+j-core
+hardcore techno
+drone ambient
+old school ebm
+martial
+industrial noise
+new beat
+medieval ambient
+martial neofolk
+technoid
+dark industrial
+dark techno
+industrial hardcore
+ambient noise
+fantasy ambient
+tribal industrial
+ritual industrial
+dark electronic
+darkcore
+eai
+ambient folk noir
+experimental noise
+terrorcore
+
+
+9
+nu metal
+alternative metal
+metal
+heavy metal
+thrash metal
+progressive metal
+nsbm
+old school death metal
+stoner rock
+rapcore
+israel
+rac
+melodic death metal
+groove metal
+symphonic metal
+power metal
+death metal
+rap metal
+black metal
+gothic metal
+deathcore
+doom metal
+progressive death metal
+technical death metal
+folk metal
+speed metal
+brutal death metal
+goregrind
+nwobhm
+post-metal
+female fronted metal
+sludge metal
+viking metal
+symphonic black metal
+stoner metal
+grindcore
+brutal deathcore
+sludge
+blackened death metal
+atmospheric black metal
+harsh noise
+gorenoise
+queercore
+deathgrind
+moshcore
+harsh noise wall
+melodic black metal
+melodic metal
+raw black metal
+avant-garde metal
+modern metal
+no wave
+blackgaze
+crunkcore
+bro-country
+depressive rock
+black noise
+true norwegian black metal
+progressive thrash metal
+pop metal
+norwegian black metal
+gothic doom metal
+depressive black metal
+cybergrind
+skinhead
+symphonic power metal
+racist country
+epic metal
+pagan black metal
+tolkien
+power noise
+power electronics
+dark metal
+post-black metal
+death doom metal
+swedish metal
+pagan metal
+southern metal
+ambient black metal
+stoner doom
+technical deathcore
+true metal
+traditional doom metal
+war metal
+symphonic death metal
+progressive black metal
+unblack metal
+christian metal
+jewish
+epic black metal
+atmospheric metal
+blackened deathcore
+country rap
+melodic power metal
+suicidal black metal
+true black metal
+atmospheric sludge metal
+blackened thrash metal
+depressive suicidal black metal
+finnish metal
+symphonic deathcore
+extreme metal
+instrumental metal
+funeral doom metal
+neo-classical metal
+technical thrash metal
+modern melodic death metal
+swedish black metal
+sjw
+slamming brutal death metal
+progressive power metal
+experimental metal
+swedish death metal
+hatecore
+orthodox black metal
+industrial black metal
+avant-garde black metal
+porngrind
+industrial death metal
+greek
+psychedelic metal
+atmospheric doom metal
+finnish black metal
+jazz metal
+sludgecore
+german thrash metal
+black doom metal
+polish black metal
+black death metal
+rechtsrock
+old school thrash metal
+non-binary
+spanish metal
+death-thrash metal
+usbm
+greece
+technical brutal death metal
+blackened speed metal
+queer metal
+genderqueer
+german metal
+polish metal
+german black metal
+wales
+experimental black metal
+french black metal
+extreme progressive metal
+traditional heavy metal
+mathgrind
+russian black metal
+japanese metal
+black ambient
+mincecore
+nwothm
+greekpunk
+yiddish
+us power metal
+polish death metal
+hebrew
+ukrainian black metal
+italian black metal
+national socialist
+palia ellinika tragoudia
+
+
+10
+punk rock
+emo
+post-hardcore
+metalcore
+reggae
+ska
+hardcore
+screamo
+hardcore punk
+emocore
+melodic hardcore
+math rock
+ska punk
+dancehall
+midwest emo
+dub
+skate punk
+horror punk
+mathcore
+melodic metalcore
+djent
+trancecore
+roots reggae
+easycore
+math metal
+progressive metalcore
+ragga
+deathrock
+jamaican
+electronicore
+christian metalcore
+crossover thrash
+jamaica
+nu metalcore
+nintendocore
+dancehall reggae
+melodic punk
+street punk
+progressive deathcore
+anarcho-punk
+powerviolence
+straight edge
+beatdown hardcore
+emoviolence
+skramz
+crust
+metallic hardcore
+chaotic hardcore
+technical metal
+roots
+skacore
+nyhc
+noisecore
+rocksteady
+thrashcore
+hamburg
+d-beat
+anthem emo
+ragga-reggae
+jazzcore
+croatian
+german punk
+neocrust
+rawstyle
+swedish punk
+fastcore
+russian emo
+noisegrind
+croatia
+frenchcore
+doomcore
+fast melodic punk
+
+
+11
+k-pop
+korean
+male vocalists
+japanese
+ballad
+j-pop
+city pop
+italian rock
+j-rock
+italian
+shibuya-kei
+kawaii metal
+visual kei
+asian pop
+asian
+c-pop
+vocaloid
+chinese
+girlgroup
+japanese rock
+poptron
+girl band
+idol
+j-metal
+asian rock
+anime rock
+italiana
+j-pixie
+italy
+korea
+japanese female pop-rock
+rabm
+blackened crust
+asia
+italian pop
+japanoise
+cantautori
+indonesia
+indonesian
+japanese pop
+italiano
+taiwanese
+taiwan
+pop italiano
+china
+doujin
+asian female vocalists
+cantautore
+j-idol
+barcelona
+napoli
+wood and string
+italian folk
+japanese female vocalists
+doujin ongaku
+vietnamese
+
+
+12
+reggaeton
+latin
+latin pop
+bossa nova
+mpb
+brazilian
+spanish
+samba
+colombia
+cuban
+brazil
+poetry
+tropicalia
+argentina
+spain
+rock en espanol
+bachata
+pagode
+rock argentino
+salsa
+sertanejo
+mexico
+cuba
+pop latino
+flamenco
+merengue
+brazilian pop
+brega
+rock chileno
+bolero
+puerto rico
+latin jazz
+chile
+cumbia
+latino
+mexican
+mambo
+latin america
+chilean
+duo
+lullabies
+romantica
+latin rap
+international
+trova
+bosta
+brasileira
+cantautor
+espanol
+fado
+portugal
+ranchera
+portuguese
+catalan
+mariachi
+peru
+zouk
+rumba
+natal
+flamenco guitar
+peruvian
+buenos aires
+mediterranean
+portugues
+
+
+13
+gospel
+musical
+christian
+comedy
+christian rock
+australia
+broadway
+spoken word
+humour
+mother
+feminist
+contemporary christian
+ccm
+musical theater
+worship
+aussie
+stand-up
+parody
+icon
+remixes
+stand-up comedy
+comedian
+hymns
+contemporary gospel
+southern gospel
+showtune
+
+
+14
+german
+deutschrock
+german hip hop
+berlin
+deutschrap
+germany
+schlager
+ndw
+deutschpunk
+liedermacher
+deutsche schlager
+deutschland
+hollywood
+german rap
+deutschpop
+kabarett
+ostrock
+volksmusik
+
+
+15
+bollywood
+india
+hindi
+indian
+bhangra
+sitar
+punjabi
+persian
+desi
+iranian
+sufi
+tabla
+iran
+farsi
+persian rock
+iranian rock
+indian classical
+ghazal
+pakistani
+punjabi bhangra
+uk bhangra
+hindustani
+punjabi folk
+
+
+16
+california
+romance
+mucajai
+boa vista
+roraima
+caracarai
+old-school heavy metal
+
+
+17
+new age electronic
+ethereal new age
+new age ambiant
+chill new age
+new age electronica
+new age instrumental
+new age fusion
+ethnic fusion
+
+
+18
+norwegian
+norway
+europe
+nordic
+european
+european pop
+norge
+norsk
+
+
+19
+russian
+russian rock
+ukrainian
+russian alternative
+russia
+ukraine
+russian metal
+moscow
+
+
+Done in 9.84s.

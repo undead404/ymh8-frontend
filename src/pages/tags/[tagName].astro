@@ -1,0 +1,46 @@
+---
+import type { InferGetStaticParamsType, GetStaticPaths } from "astro";
+import { getEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import MusicReleasesTable from "../../components/MusicReleasesTable";
+import Layout from "../../layouts/Layout.astro";
+export const getStaticPaths = (async () => {
+  const tags = await getCollection("tagLists");
+  return tags.map((tag) => ({
+    params: {
+      tagName: tag.id,
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+type Params = InferGetStaticParamsType<typeof getStaticPaths>;
+const { tagName } = Astro.params as Params;
+console.log(tagName);
+const fullTag = await getEntry("tagLists", tagName);
+---
+
+<Layout>
+  <div class="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 p-8">
+    <div class="max-w-7xl mx-auto">
+      <h1 class="text-4xl font-bold text-gray-800 mb-2">
+        Top Releases for {fullTag!.data.name}
+      </h1>
+      <div class="bg-white/60 rounded-lg shadow-sm p-4 mb-6">
+        <p class="text-lg text-gray-700 leading-relaxed">
+          {fullTag!.data.description}
+        </p>
+      </div>
+      <p class="text-gray-600 mb-6">Click column headers to sort</p>
+      <MusicReleasesTable
+        client:load
+        releases={fullTag!.data.list.map((album) => ({
+          id: `${album.artist} - ${album.name}`,
+          data: album,
+        }))}
+      />
+    </div>
+  </div>
+  <pre>
+    {JSON.stringify(fullTag, null, 2)}
+</pre>
+</Layout>

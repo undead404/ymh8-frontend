@@ -1,0 +1,23 @@
+---
+import { getCollection } from "astro:content";
+import MusicGenresTable from "../../components/MusicGenresTable";
+import Layout from "../../layouts/Layout.astro";
+
+const tags = await getCollection("tagLists");
+const hollowedTags = tags.map((item) => ({
+  ...item,
+  data: { ...item.data, list: undefined },
+}));
+---
+
+<Layout>
+  <div class="p-6 bg-gray-50 min-h-screen">
+    <div class="max-w-6xl mx-auto">
+      <h1 class="text-3xl font-bold mb-2 text-gray-800">Music Genres</h1>
+      <p class="text-gray-600 mb-6">
+        Explore all music genres known to humanity
+      </p>
+      <MusicGenresTable client:load genres={hollowedTags} />
+    </div>
+  </div>
+</Layout>
