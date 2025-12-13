@@ -9,19 +9,22 @@ const tags = await getTags();
 
 const TAGS_DIRECTORY = "src/data/tags";
 
-for (const tag of tags) {
-  const related = await getRelatedTags(tag.name);
-  const targetPath = path.join(TAGS_DIRECTORY, `${tag.name}.json`);
-  await writeFile(
-    targetPath,
-    JSON.stringify(
-      {
-        ...tag,
-        related,
-      },
-      null,
-      environment.NODE_ENV === "development" ? 2 : undefined
-    )
-  );
-}
+await Promise.all(
+  tags.map(async (tag) => {
+    const related = await getRelatedTags(tag.name);
+    const targetPath = path.join(TAGS_DIRECTORY, `${tag.name}.json`);
+    await writeFile(
+      targetPath,
+      JSON.stringify(
+        {
+          ...tag,
+          related,
+        },
+        null,
+        environment.NODE_ENV === "development" ? 2 : undefined
+      )
+    );
+  })
+);
+
 process.exit(0);

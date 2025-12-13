@@ -15,7 +15,4 @@ const topReleases = await getCollection('topReleases');
         <MusicReleasesTable client:load releases={topReleases} />
       </div>
     </div>
-    <pre>
-        {JSON.stringify(topReleases, null, 2)}
-    </pre>
 </Layout>

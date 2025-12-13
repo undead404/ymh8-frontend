@@ -4,8 +4,8 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
-    "deploy": "surge ./dist",
+    "build": "NODE_OPTIONS=--max-old-space-size=8192 astro build",
+    "deploy": "wrangler pages deploy ./dist --project-name=ymh8",
     "preview": "astro preview",
     "prepare:data": "yarn run prepare:data:tag-lists && yarn run prepare:data:tags-with-related && yarn run prepare:data:top-releases",
     "prepare:data:tag-lists": "tsx src/prepare-data/prepare-tag-lists.ts",
@@ -40,8 +40,8 @@
     "@types/lodash-es": "~4.17.12",
     "@types/pg": "~8.15.6",
     "graphology-types": "0.24.8",
-    "surge": "0.24.6",
     "tsx": "~4.21.0",
-    "typescript": "~5.9.3"
+    "typescript": "~5.9.3",
+    "wrangler": "~4.54.0"
   }
 }

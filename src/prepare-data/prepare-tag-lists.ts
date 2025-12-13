@@ -9,19 +9,22 @@ const tags = await getTags();
 
 const TAG_LISTS_DIRECTORY = "src/data/tag-lists";
 
-for (const tag of tags) {
-  const tagList = await getTagList(tag.name);
-  await writeFile(
-    path.join(TAG_LISTS_DIRECTORY, `${tag.name.replaceAll(" ", "-")}.json`),
-    JSON.stringify(
-      {
-        list: tagList,
-        slug: tag.name.replaceAll(" ", "-"),
-        ...tag,
-      },
-      null,
-      environment.NODE_ENV === "development" ? 2 : undefined
-    )
-  );
-}
+await Promise.all(
+  tags.map(async (tag) => {
+    const tagList = await getTagList(tag.name);
+    await writeFile(
+      path.join(TAG_LISTS_DIRECTORY, `${tag.name.replaceAll(" ", "-")}.json`),
+      JSON.stringify(
+        {
+          list: tagList,
+          slug: tag.name.replaceAll(" ", "-"),
+          ...tag,
+        },
+        null,
+        environment.NODE_ENV === "development" ? 2 : undefined
+      )
+    );
+  })
+);
+
 process.exit(0);

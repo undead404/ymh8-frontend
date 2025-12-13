@@ -72,7 +72,7 @@ graph.forEachNode((nodeId) => {
   const nodeRelations = relationsMap.get(nodeId) || [];
 
   // !!! ГОЛОВНА МАГІЯ !!!
-  // Сортуємо зв'язки за силою і беремо тільки ТОП-15
+  // Сортуємо зв'язки за силою і беремо тільки ТОП-5
   // Це перетворить "кашу" на структурний граф
   const topRelations = nodeRelations
     .sort((a, b) => b.weight - a.weight)

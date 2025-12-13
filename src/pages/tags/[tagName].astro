@@ -1,21 +1,32 @@
 ---
-import type { InferGetStaticParamsType, GetStaticPaths } from "astro";
-import { getEntry } from "astro:content";
-import { getCollection } from "astro:content";
+import { readdir } from "fs/promises";
+import type {
+  InferGetStaticParamsType,
+  GetStaticPaths,
+} from "astro";
+// import { getCollection } from "astro:content";
 import MusicReleasesTable from "../../components/MusicReleasesTable";
 import Layout from "../../layouts/Layout.astro";
+import path from "path";
+import { getEntry } from "astro:content";
+
+// const TARGET_FOLDER = "./src/data/tag-lists";
 export const getStaticPaths = (async () => {
-  const tags = await getCollection("tagLists");
-  return tags.map((tag) => ({
+  const files = await readdir("./src/data/tag-lists");
+  const jsonFiles = files.filter((file) => path.extname(file) === ".json");
+  //   const tags = await getCollection("tagLists");
+  return jsonFiles.map((jsonFile) => ({
     params: {
-      tagName: tag.id,
+      tagName: path.parse(jsonFile).name,
     },
   }));
 }) satisfies GetStaticPaths;
 
 type Params = InferGetStaticParamsType<typeof getStaticPaths>;
+// type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 const { tagName } = Astro.params as Params;
-console.log(tagName);
+// const { tag: fullTag } = Astro.props as Props;
+// console.log(tagName);
 const fullTag = await getEntry("tagLists", tagName);
 ---
 
@@ -40,7 +51,4 @@ const fullTag = await getEntry("tagLists", tagName);
       />
     </div>
   </div>
-  <pre>
-    {JSON.stringify(fullTag, null, 2)}
-</pre>
 </Layout>
