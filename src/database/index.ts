@@ -1,10 +1,10 @@
-import { Kysely, PostgresDialect } from "kysely";
-import type { DB } from "kysely-codegen";
-import { Pool } from "pg";
+import { Kysely, PostgresDialect } from 'kysely';
+import type { DB } from 'kysely-codegen';
+import { Pool } from 'pg';
 
-import environment from "../environment";
+import environment from '../environment';
 
-const db = new Kysely<DB>({
+const database = new Kysely<DB>({
   dialect: new PostgresDialect({
     pool: new Pool({
       database: environment.DB,
@@ -14,4 +14,4 @@ const db = new Kysely<DB>({
   }),
 });
 
-export default db;
+export default database;

@@ -1,23 +1,22 @@
-import { useCallback, type ReactNode } from "react";
-import type { SortKey } from "../hooks/use-sorted-releases";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import { type ReactNode, useCallback } from 'react';
 
-export interface SortButtonProperties {
+export interface SortButtonProperties<T extends string> {
   children: ReactNode;
-  columnKey: SortKey;
-  setSort: (key: SortKey) => void;
+  columnKey: T;
+  setSort: (key: T) => void;
   sortConfig: {
-    direction: "asc" | "desc";
-    key: SortKey;
+    direction: 'asc' | 'desc';
+    key: T;
   };
 }
 
-export function SortButton({
+export function SortButton<T extends string>({
   columnKey,
   children,
   setSort,
   sortConfig,
-}: SortButtonProperties) {
+}: SortButtonProperties<T>) {
   const isActive = sortConfig.key === columnKey;
 
   const handleSort = useCallback(() => {
@@ -26,12 +25,12 @@ export function SortButton({
   return (
     <button
       onClick={handleSort}
-      className="flex items-center gap-1 hover:text-blue-600 transition-colors font-semibold w-full cursor-pointer"
+      className="flex w-full cursor-pointer items-center gap-1 font-semibold transition-colors hover:text-blue-600"
     >
       {children}
       <span className="w-4">
         {isActive &&
-          (sortConfig.direction === "asc" ? (
+          (sortConfig.direction === 'asc' ? (
             <ChevronUp size={16} />
           ) : (
             <ChevronDown size={16} />

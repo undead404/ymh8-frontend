@@ -1,82 +1,92 @@
-import { useCallback, useMemo, useState } from "react";
-import type getTagList from "../database/get-tag-list";
+import { useCallback, useMemo, useState } from 'react';
 
-export type SortKey =
-  | "artist"
-  | "date"
-  | "name"
-  | "place"
-  | "topPlace"
-  | "topTag"
-  | "weight";
+import type getTagList from '../database/get-tag-list';
+
+export type ReleasesSortKey =
+  | 'artist'
+  | 'date'
+  | 'name'
+  | 'place'
+  | 'topPlace'
+  | 'topTag'
+  | 'weight';
 
 export default function useSortedReleases(
-  releases: Awaited<ReturnType<typeof getTagList>>["list"]
+  releases: Awaited<ReturnType<typeof getTagList>>['list'],
 ) {
   const [sortConfig, setSortConfig] = useState<{
-    key: SortKey;
-    direction: "asc" | "desc";
+    key: ReleasesSortKey;
+    direction: 'asc' | 'desc';
   }>({
-    key: "date",
-    direction: "asc",
+    key: 'date',
+    direction: 'asc',
   });
 
-  const handleSort = useCallback((key: SortKey) => {
-    setSortConfig((prev) => ({
+  const handleSort = useCallback((key: ReleasesSortKey) => {
+    setSortConfig((previous) => ({
       key,
-      direction: prev.key === key && prev.direction === "asc" ? "desc" : "asc",
+      direction:
+        previous.key === key && previous.direction === 'asc' ? 'desc' : 'asc',
     }));
   }, []);
 
   const sortedReleases = useMemo(() => {
     const sorted = [...releases];
     sorted.sort((a, b) => {
-      let aVal, bVal;
+      let aValue, bValue;
 
       switch (sortConfig.key) {
-        case "artist":
-          aVal = a.artist;
-          bVal = b.artist;
+        case 'artist': {
+          aValue = a.artist;
+          bValue = b.artist;
           break;
-        case "date":
-          aVal = a.date;
-          bVal = b.date;
+        }
+        case 'date': {
+          aValue = a.date;
+          bValue = b.date;
           break;
-        case "place":
-          aVal = a.place;
-          bVal = b.place;
+        }
+        case 'place': {
+          aValue = a.place;
+          bValue = b.place;
           break;
-        case "name":
-          aVal = a.name.toLowerCase();
-          bVal = b.name.toLowerCase();
+        }
+        case 'name': {
+          aValue = a.name.toLowerCase();
+          bValue = b.name.toLowerCase();
           break;
-        case "weight":
-          aVal = a.weight;
-          bVal = b.weight;
+        }
+        case 'weight': {
+          aValue = a.weight;
+          bValue = b.weight;
           break;
-        case "topTag":
-          aVal = a.tags[0]?.tagName.toLowerCase();
-          bVal = b.tags[0]?.tagName.toLowerCase();
+        }
+        case 'topTag': {
+          aValue = a.tags[0]?.tagName.toLowerCase();
+          bValue = b.tags[0]?.tagName.toLowerCase();
           break;
-        case "topPlace":
-          aVal = a.places[0]?.place;
-          bVal = b.places[0]?.place;
+        }
+        case 'topPlace': {
+          aValue = a.places[0]?.place;
+          bValue = b.places[0]?.place;
           break;
-        default:
+        }
+        default: {
           return 0;
+        }
       }
-      if (aVal == null) {
-        if (bVal == null) {
+      if (aValue == undefined) {
+        if (bValue == undefined) {
           return 0;
         }
         return 1;
       }
-      if (bVal == null) {
+      if (bValue == undefined) {
         return -1;
       }
 
-      if (aVal < bVal) return sortConfig.direction === "asc" ? -1 : 1;
-      if (aVal > bVal) return sortConfig.direction === "asc" ? 1 : -1;
+      if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
+      if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;
       return 0;
     });
     return sorted;

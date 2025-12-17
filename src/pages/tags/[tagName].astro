@@ -1,11 +1,11 @@
 ---
-import type { InferGetStaticParamsType, GetStaticPaths } from "astro";
+import type { GetStaticPaths,InferGetStaticParamsType } from "astro";
 import { getCollection } from "astro:content";
 import { marked } from "marked";
 
 import MusicReleasesTable from "../../components/MusicReleasesTable";
-import Layout from "../../layouts/Layout.astro";
 import getTagList from "../../database/get-tag-list";
+import Layout from "../../layouts/Layout.astro";
 import injectRelatedGenres from "../../utils/inject-related-genres";
 import slugify from "../../utils/slugify";
 
@@ -18,8 +18,8 @@ export const getStaticPaths = (async () => {
   }));
 }) satisfies GetStaticPaths;
 
-type Params = InferGetStaticParamsType<typeof getStaticPaths>;
-const { tagName: tagSlug } = Astro.params as Params;
+type Parameters_ = InferGetStaticParamsType<typeof getStaticPaths>;
+const { tagName: tagSlug } = Astro.params as Parameters_;
 const tagList = await getTagList(tagSlug);
 if (!tagList) {
   throw new Error("Tag not found");
@@ -28,13 +28,13 @@ if (!tagList) {
 
 <Layout>
   <div class="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 p-8">
-    <div class="max-w-7xl mx-auto">
-      <h1 class="text-4xl font-bold text-gray-800 mb-2">
+    <div class="mx-auto max-w-7xl">
+      <h1 class="mb-2 text-4xl font-bold text-gray-800">
         {tagList.name}
       </h1>
       {
         tagList.description && (
-          <div class="bg-white/60 rounded-lg shadow-sm p-4 mb-6" id="tag-description">
+          <div class="mb-6 rounded-lg bg-white/60 p-4 shadow-sm" id="tag-description">
             <style>
               #tag-description a{
                 color: blue;
@@ -54,12 +54,12 @@ if (!tagList) {
                   tagList.related.map(({ name }) => name)
                 )
               )}
-              class="text-lg text-gray-700 leading-relaxed"
+              class="text-lg leading-relaxed text-gray-700"
             ></p>
           </div>
         )
       }
-      <p class="text-gray-600 mb-6">Click column headers to sort</p>
+      <p class="mb-6 text-gray-600">Click column headers to sort</p>
       <MusicReleasesTable client:load releases={tagList.list} />
       <section class="mt-6 border-t border-gray-200 pt-4">
   <h2 class="mb-3 text-lg font-semibold text-gray-900">
@@ -67,7 +67,7 @@ if (!tagList) {
   </h2>
   <ul class="flex flex-wrap gap-2">
     {tagList.related.map(({ name }) => (
-      <li class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors">
+      <li class="rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200">
         <a href={`/tags/${slugify(name)}`}>{name}</a>
       </li>
     ))}

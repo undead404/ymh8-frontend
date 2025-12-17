@@ -1,191 +1,120 @@
-import React, { useState, useMemo } from "react";
-import {
-  Search,
-  Music,
-  TrendingUp,
-  Calendar,
-  ChevronUp,
-  ChevronDown,
-} from "lucide-react";
-import type { FullTag } from "../schemata";
-import slugify from "../utils/slugify";
+import { Calendar, Music, Search, TrendingUp } from 'lucide-react';
 
-interface Genre {
-  id: string;
-  data: FullTag;
-}
+import type { Genre } from '../hooks/use-music-genres';
+import useMusicGenres from '../hooks/use-music-genres';
+import formatDate from '../utils/format-date';
+import formatWeight from '../utils/format-weight';
+import slugify from '../utils/slugify';
 
-interface GenreListProps {
+import { SortButton } from './SortButton';
+
+interface GenreListProperties {
   genres: Genre[];
 }
 
-type SortKey = "name" | "weight" | "updated";
-type SortDirection = "asc" | "desc";
-
-export default function MusicGenresTable({ genres }: GenreListProps) {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [sortConfig, setSortConfig] = useState<{
-    key: SortKey;
-    direction: SortDirection;
-  }>({
-    key: "weight",
-    direction: "desc",
-  });
-
-  const filteredAndSortedGenres = useMemo(() => {
-    let filtered = genres.filter((genre) =>
-      genre.data.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-    filtered.sort((a, b) => {
-      let aValue: string | number;
-      let bValue: string | number;
-
-      switch (sortConfig.key) {
-        case "name":
-          aValue = a.data.name;
-          bValue = b.data.name;
-          break;
-        case "weight":
-          aValue = a.data.weight;
-          bValue = b.data.weight;
-          break;
-        case "updated":
-          aValue = new Date(a.data.listUpdatedAt).getTime();
-          bValue = new Date(b.data.listUpdatedAt).getTime();
-          break;
-        default:
-          return 0;
-      }
-
-      if (typeof aValue === "string") {
-        return sortConfig.direction === "asc"
-          ? aValue.localeCompare(bValue as string)
-          : (bValue as string).localeCompare(aValue);
-      }
-
-      return sortConfig.direction === "asc"
-        ? aValue - (bValue as number)
-        : (bValue as number) - aValue;
-    });
-
-    return filtered;
-  }, [genres, searchTerm, sortConfig]);
-
-  const handleSort = (key: SortKey) => {
-    setSortConfig((prev) => ({
-      key,
-      direction: prev.key === key && prev.direction === "asc" ? "desc" : "asc",
-    }));
-  };
-
-  const formatDate = (date: Date) => {
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-  };
-
-  const formatWeight = (weight: number) => {
-    if (weight >= 1e9) return `${(weight / 1e9).toFixed(2)}B`;
-    if (weight >= 1e6) return `${(weight / 1e6).toFixed(2)}M`;
-    if (weight >= 1e3) return `${(weight / 1e3).toFixed(2)}K`;
-    return weight.toFixed(0);
-  };
-
-  const SortButton: React.FC<{
-    columnKey: SortKey;
-    children: React.ReactNode;
-  }> = ({ columnKey, children }) => {
-    const isActive = sortConfig.key === columnKey;
-    return (
-      <button
-        onClick={() => handleSort(columnKey)}
-        className="flex items-center gap-1 hover:text-indigo-600 transition-colors font-semibold w-full"
-      >
-        {children}
-        <span className="w-4">
-          {isActive &&
-            (sortConfig.direction === "asc" ? (
-              <ChevronUp size={16} />
-            ) : (
-              <ChevronDown size={16} />
-            ))}
-        </span>
-      </button>
-    );
-  };
+export default function MusicGenresTable({ genres }: GenreListProperties) {
+  const {
+    searchTerm,
+    sortConfig,
+    filteredAndSortedGenres,
+    handleSort,
+    handleSearchChange,
+  } = useMusicGenres(genres);
 
   return (
     <div className="w-full">
-      <div className="mb-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <div className="relative flex-1 max-w-md">
+      {/* Controls Header */}
+      <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+        <div className="relative max-w-md flex-1 w-full">
           <Search
-            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+            className="absolute top-1/2 left-3 -translate-y-1/2 transform text-gray-400 pointer-events-none"
             size={20}
           />
           <input
             type="text"
             placeholder="Search genres..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none"
+            onChange={handleSearchChange}
+            className="w-full rounded-lg border border-gray-300 py-2 pr-4 pl-10 outline-none transition-shadow focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
           />
         </div>
-        <div className="text-sm text-gray-600">
-          Showing {filteredAndSortedGenres.length} of {genres.length} genres
+        <div className="text-sm text-gray-600 whitespace-nowrap">
+          <span className="font-semibold text-gray-900">
+            {filteredAndSortedGenres.length}
+          </span>
+          <span className="mx-1">of</span>
+          <span>{genres.length} genres</span>
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+      {/* Table Container */}
+      <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm ring-1 ring-black/5">
         <div className="overflow-x-auto">
-          <div className="max-h-[600px] overflow-y-auto">
+          <div className="max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300">
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50 sticky top-0 z-10">
+              <thead className="sticky top-0 z-10 bg-gray-50 shadow-sm">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    <SortButton columnKey="name">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase"
+                  >
+                    <SortButton
+                      columnKey="name"
+                      setSort={handleSort}
+                      sortConfig={sortConfig}
+                    >
                       <Music size={16} className="mr-1" />
                       Genre
                     </SortButton>
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    <SortButton columnKey="weight">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase"
+                  >
+                    <SortButton
+                      columnKey="weight"
+                      setSort={handleSort}
+                      sortConfig={sortConfig}
+                    >
                       <TrendingUp size={16} className="mr-1" />
                       Weight
                     </SortButton>
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    <SortButton columnKey="updated">
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase"
+                  >
+                    <SortButton
+                      columnKey="updated"
+                      setSort={handleSort}
+                      sortConfig={sortConfig}
+                    >
                       <Calendar size={16} className="mr-1" />
                       Last Updated
                     </SortButton>
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="divide-y divide-gray-200 bg-white">
                 {filteredAndSortedGenres.map((genre) => (
                   <tr
                     key={genre.id}
-                    className="hover:bg-gray-50 transition-colors cursor-pointer"
-                    onClick={() =>
-                      console.log("Genre clicked:", genre.data.name)
-                    }
+                    className="group transition-colors hover:bg-gray-50"
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
+                      {/* Anchor is now the primary interaction for the name cell, no parent onClick */}
                       <a
-                        className="flex items-center"
+                        className="flex items-center focus:outline-none"
                         href={`/tags/${slugify(genre.data.name)}`}
                       >
-                        <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 text-sm font-bold text-white shadow-sm group-hover:scale-105 transition-transform">
                           {genre.data.name.charAt(0).toUpperCase()}
                         </div>
                         <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">
+                          <div className="text-sm font-medium text-gray-900 group-hover:text-indigo-600 transition-colors">
                             {genre.data.name}
                           </div>
-                          <div className="text-xs text-gray-500 max-w-64 truncate">
+                          <div className="max-w-64 truncate text-xs text-gray-500">
                             {genre.data.description}
                           </div>
                         </div>
@@ -196,12 +125,12 @@ export default function MusicGenresTable({ genres }: GenreListProps) {
                         <div className="text-sm font-semibold text-gray-900">
                           {formatWeight(genre.data.weight)}
                         </div>
-                        <div className="ml-2 text-xs text-gray-500 font-mono">
+                        <div className="ml-2 font-mono text-xs text-gray-500 tabular-nums">
                           {genre.data.weight.toLocaleString()}
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                    <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-600 tabular-nums">
                       {formatDate(new Date(genre.data.listUpdatedAt))}
                     </td>
                   </tr>
@@ -212,10 +141,14 @@ export default function MusicGenresTable({ genres }: GenreListProps) {
         </div>
 
         {filteredAndSortedGenres.length === 0 && (
-          <div className="text-center py-12 text-gray-500">
-            <Music size={48} className="mx-auto mb-4 text-gray-300" />
-            <p className="text-lg font-medium">No genres found</p>
-            <p className="text-sm">Try adjusting your search term</p>
+          <div className="py-12 text-center text-gray-500">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100">
+              <Music size={24} className="text-gray-400" />
+            </div>
+            <p className="text-lg font-medium text-gray-900">No genres found</p>
+            <p className="text-sm">
+              We couldn&apos;t find anything matching &quot;{searchTerm}&quot;
+            </p>
           </div>
         )}
       </div>

@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+
 import MusicReleasesTable from '../components/MusicReleasesTable'
 import Layout from '../layouts/Layout.astro';
 const topReleases = await getCollection('topReleases');
@@ -7,11 +8,11 @@ const topReleases = await getCollection('topReleases');
 
 <Layout>
     <div class="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 p-8">
-      <div class="max-w-7xl mx-auto">
-        <h1 class="text-4xl font-bold text-gray-800 mb-2">
+      <div class="mx-auto max-w-7xl">
+        <h1 class="mb-2 text-4xl font-bold text-gray-800">
           Top Music Releases Ever
         </h1>
-        <p class="text-gray-600 mb-6">Click column headers to sort</p>
+        <p class="mb-6 text-gray-600">Click column headers to sort</p>
         <MusicReleasesTable client:load releases={topReleases.map(({data}) => data)} />
       </div>
     </div>

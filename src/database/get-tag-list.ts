@@ -1,7 +1,8 @@
-import slugify from "../utils/slugify";
-import getAlbumPlaces from "./get-album-places";
-import getAlbumTags from "./get-album-tags";
-import getTagBySlug from "./get-tag-by-slug";
+import slugify from '../utils/slugify';
+
+import getAlbumPlaces from './get-album-places';
+import getAlbumTags from './get-album-tags';
+import getTagBySlug from './get-tag-by-slug';
 
 export default async function getTagList(tagSlug: string) {
   console.log(`getTagList`, tagSlug);
@@ -20,11 +21,11 @@ export default async function getTagList(tagSlug: string) {
         return {
           ...listItem,
           places: albumPlaces.filter(
-            ({ tagName }) => slugify(tagName) !== tagSlug
+            ({ tagName }) => slugify(tagName) !== tagSlug,
           ),
           tags: albumTags.filter(({ tagName }) => slugify(tagName) !== tagSlug),
         };
-      })
+      }),
     ),
   };
 }

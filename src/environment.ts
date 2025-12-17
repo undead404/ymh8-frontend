@@ -1,5 +1,6 @@
-import { z } from "astro/zod";
-import { nonEmptyString } from "./schemata";
+import { z } from 'astro/zod';
+
+import { nonEmptyString } from './schemata';
 
 const environmentSchema = z.object({
   DB: nonEmptyString,

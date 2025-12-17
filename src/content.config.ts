@@ -1,13 +1,13 @@
-import { defineCollection } from "astro:content";
+import { defineCollection } from 'astro:content';
 
-import graphLoader from "./loaders/graph";
-import tagsIndexLoader from "./loaders/tags-index";
-import topReleasesLoader from "./loaders/top-releases";
+import graphLoader from './loaders/graph';
+import tagsIndexLoader from './loaders/tags-index';
+import topReleasesLoader from './loaders/top-releases';
 import {
   fullAlbumSchema,
   musicUniverseGraphSchema,
   tagsIndexItemSchema,
-} from "./schemata";
+} from './schemata';
 
 const tagsGraph = defineCollection({
   loader: graphLoader(),

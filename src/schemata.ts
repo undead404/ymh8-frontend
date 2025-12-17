@@ -1,4 +1,4 @@
-import { z } from "astro/zod";
+import { z } from 'astro/zod';
 
 export const nonEmptyString = z.string().nonempty().max(1023);
 
@@ -21,7 +21,7 @@ export const musicUniverseGraphSchema = z.object({
       source: z.string(),
       target: z.string(),
       weight: z.number(),
-    })
+    }),
   ),
   nodes: z.array(
     z.object({
@@ -34,7 +34,7 @@ export const musicUniverseGraphSchema = z.object({
       x: z.number(),
       y: z.number(),
       z: z.number(),
-    })
+    }),
   ),
 });
 
@@ -46,7 +46,7 @@ export const dateString = z
   .transform((value) => {
     // console.log(value);
     let valueToChange = value;
-    while (valueToChange.endsWith("-00")) {
+    while (valueToChange.endsWith('-00')) {
       // console.log(valueToChange);
       valueToChange = valueToChange.slice(0, -3);
     }

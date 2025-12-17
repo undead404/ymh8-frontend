@@ -1,7 +1,9 @@
 ---
+import { getCollection } from 'astro:content';
+
 import { MusicUniverse } from '../components/MusicUniverse';
 import Layout from '../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
+
 import "@react-sigma/core/lib/style.css"
 
 const [graph] = await getCollection('tagsGraph');

@@ -1,5 +1,6 @@
-import ForceGraph3D from "react-force-graph-3d";
-import type { MusicUniverseGraph } from "../schemata";
+import ForceGraph3D from 'react-force-graph-3d';
+
+import type { MusicUniverseGraph } from '../schemata';
 
 // const LoadGraph = ({ graph: musicGraph }: { graph: MusicUniverseGraph }) => {
 //   return null;

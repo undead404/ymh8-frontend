@@ -1,4 +1,4 @@
-import slugify from "./slugify";
+import slugify from './slugify';
 
 function getGenreEndIndex(startIndex: number, genre: string) {
   return startIndex + genre.length;
@@ -19,13 +19,13 @@ function getGenreEndIndex(startIndex: number, genre: string) {
 export default function injectRelatedGenres(
   self: string,
   description: string,
-  relatedGenres: string[]
+  relatedGenres: string[],
 ) {
   //   console.log(self, description, relatedGenres);
   const lowercasedDescription = description.toLowerCase();
   const sortedGenres = relatedGenres.toSorted(
     // longer to shorter
-    (a, b) => b.length - a.length
+    (a, b) => b.length - a.length,
   );
   const occurrences = new Map<string, number>();
 
@@ -49,7 +49,7 @@ export default function injectRelatedGenres(
     while (genreStartIndex !== -1 && hasOverlap(genreStartIndex, genre)) {
       genreStartIndex = lowercasedDescription.indexOf(
         genre,
-        genreStartIndex + genre.length
+        genreStartIndex + genre.length,
       );
     }
     // If a valid spot is found, claim it.
@@ -60,7 +60,7 @@ export default function injectRelatedGenres(
   const adjustments = [...occurrences.entries()].toSorted(
     // first adjustments first
     ([, genre1StartIndex], [, genre2StartIndex]) =>
-      genre1StartIndex - genre2StartIndex
+      genre1StartIndex - genre2StartIndex,
   );
   let alteredDescription = description;
   for (const [genre, genreStartIndex] of adjustments) {
@@ -70,9 +70,9 @@ export default function injectRelatedGenres(
     const indexAdjustment = alteredDescription.length - description.length;
     const genreEndIndex = getGenreEndIndex(genreStartIndex, genre);
     alteredDescription =
-      alteredDescription.substring(0, genreStartIndex + indexAdjustment) +
-      `[${alteredDescription.substring(genreStartIndex + indexAdjustment, genreEndIndex + indexAdjustment)}](/tags/${slugify(genre)}/)` +
-      alteredDescription.substring(genreEndIndex + indexAdjustment);
+      alteredDescription.slice(0, genreStartIndex + indexAdjustment) +
+      `[${alteredDescription.slice(genreStartIndex + indexAdjustment, genreEndIndex + indexAdjustment)}](/tags/${slugify(genre)}/)` +
+      alteredDescription.slice(genreEndIndex + indexAdjustment);
   }
   //   console.log(alteredDescription);
   return alteredDescription;
