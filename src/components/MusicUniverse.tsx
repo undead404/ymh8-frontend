@@ -1,11 +1,9 @@
 import ForceGraph3D from "react-force-graph-3d";
-import { useEffect } from "react";
-import Graph from "graphology";
 import type { MusicUniverseGraph } from "../schemata";
 
-const LoadGraph = ({ graph: musicGraph }: { graph: MusicUniverseGraph }) => {
-  return null;
-};
+// const LoadGraph = ({ graph: musicGraph }: { graph: MusicUniverseGraph }) => {
+//   return null;
+// };
 
 export const MusicUniverse = ({ graph }: { graph: MusicUniverseGraph }) => {
   return (

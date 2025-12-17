@@ -1,53 +1,46 @@
 ---
-import { readdir } from "fs/promises";
 import type {
   InferGetStaticParamsType,
   GetStaticPaths,
 } from "astro";
-// import { getCollection } from "astro:content";
+import { getCollection } from "astro:content";
+import { marked } from 'marked';
+
 import MusicReleasesTable from "../../components/MusicReleasesTable";
 import Layout from "../../layouts/Layout.astro";
-import path from "path";
-import { getEntry } from "astro:content";
+import getTagList from "../../database/get-tag-list";
 
-// const TARGET_FOLDER = "./src/data/tag-lists";
 export const getStaticPaths = (async () => {
-  const files = await readdir("./src/data/tag-lists");
-  const jsonFiles = files.filter((file) => path.extname(file) === ".json");
-  //   const tags = await getCollection("tagLists");
-  return jsonFiles.map((jsonFile) => ({
+  const bareTags = await getCollection('tagsIndex');
+  return bareTags.map((bareTag) => ({
     params: {
-      tagName: path.parse(jsonFile).name,
+      tagName: bareTag.id,
     },
   }));
 }) satisfies GetStaticPaths;
 
 type Params = InferGetStaticParamsType<typeof getStaticPaths>;
-// type Props = InferGetStaticPropsType<typeof getStaticPaths>;
-const { tagName } = Astro.params as Params;
-// const { tag: fullTag } = Astro.props as Props;
-// console.log(tagName);
-const fullTag = await getEntry("tagLists", tagName);
+const { tagName: tagSlug } = Astro.params as Params;
+const tagList = await getTagList(tagSlug)
+if (!tagList) {
+  throw new Error('Tag not found')
+}
 ---
 
 <Layout>
   <div class="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 p-8">
     <div class="max-w-7xl mx-auto">
       <h1 class="text-4xl font-bold text-gray-800 mb-2">
-        Top Releases for {fullTag!.data.name}
+        Top Releases for {tagList.name}
       </h1>
-      <div class="bg-white/60 rounded-lg shadow-sm p-4 mb-6">
-        <p class="text-lg text-gray-700 leading-relaxed">
-          {fullTag!.data.description}
+      {tagList.description && <div class="bg-white/60 rounded-lg shadow-sm p-4 mb-6">
+        <p set:html={marked(tagList.description)} class="text-lg text-gray-700 leading-relaxed">
         </p>
-      </div>
+      </div>}
       <p class="text-gray-600 mb-6">Click column headers to sort</p>
       <MusicReleasesTable
         client:load
-        releases={fullTag!.data.list.map((album) => ({
-          id: `${album.artist} - ${album.name}`,
-          data: album,
-        }))}
+        releases={tagList.list}
       />
     </div>
   </div>

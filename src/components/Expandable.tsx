@@ -5,7 +5,7 @@ export interface ExpandableProperties {
   max: number;
 }
 
-export default function Expandable<T>({ items, max }: ExpandableProperties) {
+export default function Expandable({ items, max }: ExpandableProperties) {
   const [isExpanded, setExpanded] = useState(false);
   const itemsToShow = isExpanded ? items : items.slice(0, max);
   const toggle = useCallback(() => setExpanded((prev) => !prev), []);

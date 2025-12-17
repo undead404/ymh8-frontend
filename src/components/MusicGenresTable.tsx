@@ -8,6 +8,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import type { FullTag } from "../schemata";
+import slugify from "../utils/slugify";
 
 interface Genre {
   id: string;
@@ -164,7 +165,7 @@ export default function MusicGenresTable({ genres }: GenreListProps) {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {filteredAndSortedGenres.map((genre, index) => (
+                {filteredAndSortedGenres.map((genre) => (
                   <tr
                     key={genre.id}
                     className="hover:bg-gray-50 transition-colors cursor-pointer"
@@ -175,7 +176,7 @@ export default function MusicGenresTable({ genres }: GenreListProps) {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <a
                         className="flex items-center"
-                        href={`/tags/${genre.data.name.replaceAll(" ", "-")}`}
+                        href={`/tags/${slugify(genre.data.name)}`}
                       >
                         <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
                           {genre.data.name.charAt(0).toUpperCase()}
@@ -201,7 +202,7 @@ export default function MusicGenresTable({ genres }: GenreListProps) {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                      {formatDate(genre.data.listUpdatedAt)}
+                      {formatDate(new Date(genre.data.listUpdatedAt))}
                     </td>
                   </tr>
                 ))}

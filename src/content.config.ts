@@ -1,43 +1,31 @@
-import { glob } from "astro/loaders";
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
+
+import graphLoader from "./loaders/graph";
+import tagsIndexLoader from "./loaders/tags-index";
+import topReleasesLoader from "./loaders/top-releases";
 import {
   fullAlbumSchema,
-  fullTagSchema,
   musicUniverseGraphSchema,
+  tagsIndexItemSchema,
 } from "./schemata";
 
-const tags = defineCollection({
-  loader: glob({
-    base: "./src/data/tags",
-    pattern: "*.json",
-  }),
-  schema: z.object({
-    name: z.string(),
-    related: z.array(
-      z.object({
-        name: z.string(),
-        weight: z.number(),
-      })
-    ),
-    weight: z.number(),
-  }),
-});
-
 const tagsGraph = defineCollection({
-  loader: glob({ base: "./src/data/graph", pattern: "*.json" }),
+  loader: graphLoader(),
   schema: musicUniverseGraphSchema,
 });
 
 const topReleases = defineCollection({
-  loader: glob({ base: "./src/data/top-releases", pattern: "*.json" }),
+  loader: topReleasesLoader(),
   schema: fullAlbumSchema,
 });
 
-const tagLists = defineCollection({
-  loader: glob({ base: "./src/data/tag-lists", pattern: "*.json" }),
-  schema: fullTagSchema.extend({
-    list: z.array(fullAlbumSchema),
-  }),
+const tagsIndex = defineCollection({
+  loader: tagsIndexLoader(),
+  schema: tagsIndexItemSchema,
 });
 
-export const collections = { tagLists, tags, tagsGraph, topReleases };
+export const collections = {
+  tagsIndex,
+  tagsGraph,
+  topReleases,
+};

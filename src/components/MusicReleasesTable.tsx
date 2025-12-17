@@ -1,13 +1,11 @@
-import type { FullAlbum } from "../schemata";
 import useSortedReleases from "../hooks/use-sorted-releases";
 import { SortButton } from "./SortButton";
 import Expandable from "./Expandable";
+import type getTagList from "../database/get-tag-list";
+import slugify from "../utils/slugify";
 
 export interface MusicReleasesTableProperties {
-  releases: {
-    id: string;
-    data: FullAlbum;
-  }[];
+  releases: Awaited<ReturnType<typeof getTagList>>["list"];
 }
 
 export default function MusicReleasesTable({
@@ -88,37 +86,35 @@ export default function MusicReleasesTable({
         <tbody>
           {sortedReleases.map((album) => (
             <tr
-              key={album.id}
+              key={album.place}
               className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
-              id={`place-${album.data.place}`}
+              id={`place-${album.place}`}
             >
               <td className="px-4 py-3 font-semibold text-gray-700">
-                {album.data.place}
+                {album.place}
               </td>
               <td className="px-4 py-3">
                 <div className="flex items-center gap-3">
-                  {album.data.thumbnail && (
+                  {album.thumbnail && (
                     <img
-                      src={album.data.thumbnail}
-                      alt={album.data.name}
+                      src={album.thumbnail}
+                      alt={album.name}
                       className="w-10 h-10 rounded shadow-sm"
                     />
                   )}
-                  <span className="font-medium">{album.data.name}</span>
+                  <span className="font-medium">{album.name}</span>
                 </div>
               </td>
-              <td className="px-4 py-3 text-gray-700">{album.data.artist}</td>
-              <td className="px-4 py-3 text-gray-600 text-sm">
-                {album.data.date}
-              </td>
+              <td className="px-4 py-3 text-gray-700">{album.artist}</td>
+              <td className="px-4 py-3 text-gray-600 text-sm">{album.date}</td>
               <td className="px-4 py-3 max-w-3xs gap-1 text-sm">
                 <p className="flex flex-wrap gap-[3px]">
                   <Expandable
-                    items={album.data.tags.map((tag) => (
+                    items={album.tags.map((tag) => (
                       <a
                         className="inline-block px-2 py-1 bg-blue-100 text-blue-700 rounded text-center"
                         key={tag.tagName}
-                        href={`/tags/${tag.tagName.replaceAll(" ", "-")}`}
+                        href={`/tags/${slugify(tag.tagName)}`}
                         style={{ fontSize: `calc(1em * ${tag.count} / 100)` }}
                         title={tag.tagName}
                       >
@@ -132,14 +128,13 @@ export default function MusicReleasesTable({
               <td className="px-4 py-3 text-gray-600 max-w-3xs">
                 <div className="flex flex-wrap gap-[3px]">
                   <Expandable
-                    items={album.data.places.map((tag) => (
+                    items={album.places.map((tag) => (
                       <a
                         key={tag.tagName}
                         className="inline-block px-1.5 py-0.5 text-xs bg-gray-100 text-gray-600 rounded"
-                        href={`/tags/${tag.tagName.replaceAll(
-                          " ",
-                          "-"
-                        )}#place-${tag.place}`}
+                        href={`/tags/${slugify(tag.tagName)}#place-${
+                          tag.place
+                        }`}
                         title={`Place: ${tag.place}`}
                       >
                         {tag.tagName} #{tag.place}
@@ -150,7 +145,7 @@ export default function MusicReleasesTable({
                 </div>
               </td>
               <td className="px-4 py-3 text-gray-600 text-sm font-mono">
-                {album.data.weight.toLocaleString()}
+                {album.weight.toLocaleString()}
               </td>
             </tr>
           ))}

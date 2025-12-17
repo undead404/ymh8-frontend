@@ -7,6 +7,6 @@ const environmentSchema = z.object({
   DB_USER: nonEmptyString,
 });
 
-const environment = environmentSchema.parse(import.meta.env);
+const environment = environmentSchema.parse(import.meta.env || process.env);
 
 export default environment;

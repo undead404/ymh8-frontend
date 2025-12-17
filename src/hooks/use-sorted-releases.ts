@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
-import type { FullAlbum } from "../schemata";
+import type getTagList from "../database/get-tag-list";
 
 export type SortKey =
   | "artist"
@@ -11,10 +11,7 @@ export type SortKey =
   | "weight";
 
 export default function useSortedReleases(
-  releases: {
-    id: string;
-    data: FullAlbum;
-  }[]
+  releases: Awaited<ReturnType<typeof getTagList>>["list"]
 ) {
   const [sortConfig, setSortConfig] = useState<{
     key: SortKey;
@@ -38,32 +35,32 @@ export default function useSortedReleases(
 
       switch (sortConfig.key) {
         case "artist":
-          aVal = a.data.artist;
-          bVal = b.data.artist;
+          aVal = a.artist;
+          bVal = b.artist;
           break;
         case "date":
-          aVal = a.data.date;
-          bVal = b.data.date;
+          aVal = a.date;
+          bVal = b.date;
           break;
         case "place":
-          aVal = a.data.place;
-          bVal = b.data.place;
+          aVal = a.place;
+          bVal = b.place;
           break;
         case "name":
-          aVal = a.data.name.toLowerCase();
-          bVal = b.data.name.toLowerCase();
+          aVal = a.name.toLowerCase();
+          bVal = b.name.toLowerCase();
           break;
         case "weight":
-          aVal = a.data.weight;
-          bVal = b.data.weight;
+          aVal = a.weight;
+          bVal = b.weight;
           break;
         case "topTag":
-          aVal = a.data.tags[0]?.tagName.toLowerCase();
-          bVal = b.data.tags[0]?.tagName.toLowerCase();
+          aVal = a.tags[0]?.tagName.toLowerCase();
+          bVal = b.tags[0]?.tagName.toLowerCase();
           break;
         case "topPlace":
-          aVal = a.data.places[0]?.place;
-          bVal = b.data.places[0]?.place;
+          aVal = a.places[0]?.place;
+          bVal = b.places[0]?.place;
           break;
         default:
           return 0;

@@ -3,11 +3,7 @@ import { getCollection } from "astro:content";
 import MusicGenresTable from "../../components/MusicGenresTable";
 import Layout from "../../layouts/Layout.astro";
 
-const tags = await getCollection("tagLists");
-const hollowedTags = tags.map((item) => ({
-  ...item,
-  data: { ...item.data, list: undefined },
-}));
+const tags = await getCollection("tagsIndex");
 ---
 
 <Layout>
@@ -17,7 +13,7 @@ const hollowedTags = tags.map((item) => ({
       <p class="text-gray-600 mb-6">
         Explore all music genres known to humanity
       </p>
-      <MusicGenresTable client:load genres={hollowedTags} />
+      <MusicGenresTable client:load genres={tags} />
     </div>
   </div>
 </Layout>

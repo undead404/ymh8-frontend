@@ -2,21 +2,18 @@ import { z } from "astro/zod";
 
 export const nonEmptyString = z.string().nonempty().max(1023);
 
-export const weightedTagSchema = z.object({
-  // id: nonEmptyString,
+export const bareTagSchema = z.object({
   name: nonEmptyString,
-  weight: z.number(),
 });
 
-export const weightedTagWithRelatedSchema = weightedTagSchema.extend({
-  related: z.array(weightedTagSchema),
-});
+export interface WeightedTag {
+  name: string;
+  weight: number;
+}
 
-export type WeightedTag = z.infer<typeof weightedTagSchema>;
-
-export type WeightedTagWithRelated = z.infer<
-  typeof weightedTagWithRelatedSchema
->;
+export interface WeightedTagWithRelated extends WeightedTag {
+  related: WeightedTag[];
+}
 
 export const musicUniverseGraphSchema = z.object({
   links: z.array(
@@ -47,8 +44,10 @@ export const dateString = z
   .string()
   .regex(/^\d{4}(?:-\d{2}(?:-\d{2})?)?$/)
   .transform((value) => {
+    // console.log(value);
     let valueToChange = value;
     while (valueToChange.endsWith("-00")) {
+      // console.log(valueToChange);
       valueToChange = valueToChange.slice(0, -3);
     }
     return valueToChange;
@@ -78,6 +77,7 @@ export const weightedAlbumSchema = z.object({
   cover: z.string().url().nullable(),
   date: dateString.nullable(),
   name: nonEmptyString,
+  statsUpdatedAt: z.string().datetime().nullable(),
   thumbnail: z.string().url().nullable(),
   weight: z.number(),
 });
@@ -92,10 +92,17 @@ export const fullAlbumSchema = weightedAlbumSchema.extend({
 
 export type FullAlbum = z.infer<typeof fullAlbumSchema>;
 
-export const fullTagSchema = weightedTagSchema.extend({
-  albumsScrapedAt: z.coerce.date(),
+export interface FullTag extends WeightedTag {
+  albumsScrapedAt: string;
+  description: null | string;
+  listUpdatedAt: string;
+}
+
+export const tagsIndexItemSchema = bareTagSchema.extend({
+  albumsScrapedAt: z.string().datetime(),
   description: z.string().nullable(),
-  listUpdatedAt: z.coerce.date(),
+  listUpdatedAt: z.string().datetime(),
+  weight: z.number(),
 });
 
-export type FullTag = z.infer<typeof fullTagSchema>;
+export type TagsIndexItem = z.infer<typeof tagsIndexItemSchema>;
