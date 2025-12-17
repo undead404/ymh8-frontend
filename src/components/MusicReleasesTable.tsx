@@ -15,6 +15,7 @@ export default function MusicReleasesTable({
 
   return (
     <div className="w-full overflow-x-auto">
+      <h2 className="mb-3 text-lg font-semibold text-gray-900">Top releases</h2>
       <table className="w-full border-collapse bg-white shadow-lg rounded-lg overflow-hidden">
         <thead className="bg-gray-50 border-b border-gray-200">
           <tr>

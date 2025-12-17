@@ -91,6 +91,41 @@ export default function getTagBySlug(tagSlug: string) {
             .limit(100)
         ).as("list"),
       ])
+      .select((eb) => [
+        // Replaces LEFT JOIN LATERAL ... json_agg
+        jsonArrayFrom(
+          eb
+            .selectFrom("Album")
+            .innerJoin("AlbumTag as first_tag", (join) =>
+              join
+                .onRef("Album.artist", "=", "first_tag.albumArtist")
+                .onRef("Album.name", "=", "first_tag.albumName")
+            )
+            .innerJoin("AlbumTag as second_tag", (join) =>
+              join
+                .onRef("second_tag.albumArtist", "=", "Album.artist")
+                .onRef("second_tag.albumName", "=", "Album.name")
+            )
+            .innerJoin(
+              "Tag as second_tag_tag",
+              "second_tag_tag.name",
+              "second_tag.tagName"
+            )
+            // The Correlation
+            .whereRef("first_tag.tagName", "=", "t.name")
+            .where("second_tag_tag.listUpdatedAt", "is not", null)
+            .whereRef("second_tag_tag.name", "<>", "t.name")
+            .groupBy("second_tag.tagName")
+            .orderBy(sql`weight`, "desc")
+            .limit(10)
+            .select([
+              "second_tag.tagName as name",
+              sql<number>`SUM(LEAST("first_tag"."count", "second_tag"."count")::FLOAT * COALESCE("Album"."listeners", 0))`.as(
+                "weight"
+              ),
+            ])
+        ).as("related"),
+      ])
       .orderBy("t.tag_weight", "desc")
       .executeTakeFirst()
   );

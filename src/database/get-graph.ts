@@ -45,12 +45,12 @@ export default function getComplexTagData() {
               .onRef("Album.artist", "=", "first_tag.albumArtist")
               .onRef("Album.name", "=", "first_tag.albumName")
           )
-          .leftJoin("AlbumTag as second_tag", (join) =>
+          .innerJoin("AlbumTag as second_tag", (join) =>
             join
               .onRef("second_tag.albumArtist", "=", "Album.artist")
               .onRef("second_tag.albumName", "=", "Album.name")
           )
-          .leftJoin(
+          .innerJoin(
             "Tag as second_tag_tag",
             "second_tag_tag.name",
             "second_tag.tagName"

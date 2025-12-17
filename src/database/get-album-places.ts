@@ -2,6 +2,7 @@ import type { BareAlbum } from "../schemata";
 import db from ".";
 
 export default function getAlbumPlaces(album: BareAlbum) {
+  console.log("getAlbumPlaces", { artist: album.artist, name: album.name });
   return db
     .selectFrom("TagListItem")
     .select(["place", "tagName"])

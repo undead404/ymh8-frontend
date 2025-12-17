@@ -5,6 +5,12 @@
   "[ignore]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
+  "[properties]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -37,7 +43,6 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   // Enable format on save
   "editor.formatOnSave": true,
-
   // ESLint settings
   "eslint.validate": [
     "javascript",
@@ -47,16 +52,11 @@
     "javascript.mjs",
     "javascript.cjs"
   ],
+  "files.autoSave": "off",
   "npm.packageManager": "yarn",
   "search.exclude": {
     "**/node_modules": true,
     "**/yarn.lock": true
   },
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "[properties]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
-  },
-  "[shellscript]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
-  }
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

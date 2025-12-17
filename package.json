@@ -1,15 +1,4 @@
 {
-  "name": "ymh8-frontend",
-  "type": "module",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro check && NODE_OPTIONS=--max-old-space-size=8192 astro build",
-    "codegen": "kysely-codegen",
-    "deploy": "wrangler pages deploy ./dist --project-name=ymh8",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
   "dependencies": {
     "@astrojs/react": "^4.4.2",
     "@react-sigma/core": "^5.0.6",
@@ -41,6 +30,19 @@
     "kysely-codegen": "0.19.0",
     "tsx": "~4.21.0",
     "typescript": "^5.9.3",
+    "vitest": "~4.0.16",
     "wrangler": "~4.54.0"
-  }
+  },
+  "name": "ymh8-frontend",
+  "scripts": {
+    "astro": "astro",
+    "build": "astro check && NODE_OPTIONS=--max-old-space-size=8192 astro build",
+    "codegen": "kysely-codegen",
+    "deploy": "wrangler pages deploy ./dist --project-name=ymh8",
+    "dev": "astro dev",
+    "preview": "astro preview",
+    "test": "vitest"
+  },
+  "type": "module",
+  "version": "0.0.1"
 }

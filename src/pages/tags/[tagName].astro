@@ -1,17 +1,16 @@
 ---
-import type {
-  InferGetStaticParamsType,
-  GetStaticPaths,
-} from "astro";
+import type { InferGetStaticParamsType, GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
-import { marked } from 'marked';
+import { marked } from "marked";
 
 import MusicReleasesTable from "../../components/MusicReleasesTable";
 import Layout from "../../layouts/Layout.astro";
 import getTagList from "../../database/get-tag-list";
+import injectRelatedGenres from "../../utils/inject-related-genres";
+import slugify from "../../utils/slugify";
 
 export const getStaticPaths = (async () => {
-  const bareTags = await getCollection('tagsIndex');
+  const bareTags = await getCollection("tagsIndex");
   return bareTags.map((bareTag) => ({
     params: {
       tagName: bareTag.id,
@@ -21,9 +20,9 @@ export const getStaticPaths = (async () => {
 
 type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 const { tagName: tagSlug } = Astro.params as Params;
-const tagList = await getTagList(tagSlug)
+const tagList = await getTagList(tagSlug);
 if (!tagList) {
-  throw new Error('Tag not found')
+  throw new Error("Tag not found");
 }
 ---
 
@@ -31,17 +30,49 @@ if (!tagList) {
   <div class="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 p-8">
     <div class="max-w-7xl mx-auto">
       <h1 class="text-4xl font-bold text-gray-800 mb-2">
-        Top Releases for {tagList.name}
+        {tagList.name}
       </h1>
-      {tagList.description && <div class="bg-white/60 rounded-lg shadow-sm p-4 mb-6">
-        <p set:html={marked(tagList.description)} class="text-lg text-gray-700 leading-relaxed">
-        </p>
-      </div>}
+      {
+        tagList.description && (
+          <div class="bg-white/60 rounded-lg shadow-sm p-4 mb-6" id="tag-description">
+            <style>
+              #tag-description a{
+                color: blue;
+              }
+              #tag-description a:hover{
+                text-decoration: underline;
+              }
+              #tag-description p {
+                margin: 0.5rem 0;
+              }
+            </style>
+            <p
+              set:html={marked(
+                injectRelatedGenres(
+                  tagList.name,
+                  tagList.description,
+                  tagList.related.map(({ name }) => name)
+                )
+              )}
+              class="text-lg text-gray-700 leading-relaxed"
+            ></p>
+          </div>
+        )
+      }
       <p class="text-gray-600 mb-6">Click column headers to sort</p>
-      <MusicReleasesTable
-        client:load
-        releases={tagList.list}
-      />
+      <MusicReleasesTable client:load releases={tagList.list} />
+      <section class="mt-6 border-t border-gray-200 pt-4">
+  <h2 class="mb-3 text-lg font-semibold text-gray-900">
+    See related genres
+  </h2>
+  <ul class="flex flex-wrap gap-2">
+    {tagList.related.map(({ name }) => (
+      <li class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors">
+        <a href={`/tags/${slugify(name)}`}>{name}</a>
+      </li>
+    ))}
+  </ul>
+</section>
     </div>
   </div>
 </Layout>
