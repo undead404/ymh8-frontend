@@ -107,7 +107,7 @@ export default function MusicGenresTable({ genres }: GenreListProperties) {
                         className="flex items-center focus:outline-none"
                         href={`/tags/${slugify(genre.data.name)}`}
                       >
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 text-sm font-bold text-white shadow-sm group-hover:scale-105 transition-transform">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-linear-to-br from-indigo-500 to-purple-600 text-sm font-bold text-white shadow-sm group-hover:scale-105 transition-transform">
                           {genre.data.name.charAt(0).toUpperCase()}
                         </div>
                         <div className="ml-4">

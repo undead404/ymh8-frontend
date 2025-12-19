@@ -28,13 +28,13 @@ export default function getTopAlbumsWithStats() {
             // The Weight Calculation
             sql<number>`
               (
-                        COALESCE("playcount", 0)::FLOAT / 1000 
-                        * COALESCE("listeners", 0) 
-                        / COALESCE(
-                            CASE WHEN "numberOfTracks" = 0 THEN 1 ELSE "numberOfTracks" END,
-                            (SELECT "avgTracks" FROM "GlobalStats")
-                        )
-                      )
+                COALESCE("playcount", 0)::FLOAT / 1000 
+                * COALESCE("listeners", 0) 
+                / COALESCE(
+                    CASE WHEN "numberOfTracks" = 0 THEN 1 ELSE "numberOfTracks" END,
+                    (SELECT "avgTracks" FROM "GlobalStats")
+                )
+              )
             `.as('weight'),
           ])
           // Order by the alias 'weight'

@@ -78,19 +78,44 @@ export default function getTagBySlug(tagSlug: string) {
               // Weight calculation referencing 'gs.avgTracks'
               sql<number>`
                 (
-                              COALESCE("playcount", 0)::FLOAT / 1000 
-                              * COALESCE("listeners", 0) 
-                              / COALESCE(
-                                  CASE WHEN "Album"."numberOfTracks" = 0 THEN 1 ELSE "Album"."numberOfTracks" END,
-                                  "gs"."avgTracks"
-                              ) 
-                              / 100 
-                              * "AlbumTag"."count"
-                            )
+                  COALESCE("playcount", 0)::FLOAT / 1000 
+                  * COALESCE("listeners", 0) 
+                  / COALESCE(
+                      CASE WHEN "Album"."numberOfTracks" = 0 THEN 1 ELSE "Album"."numberOfTracks" END,
+                      "gs"."avgTracks"
+                  ) 
+                  / 100 
+                  * "AlbumTag"."count"
+                )
               `.as('weight'),
             ])
             .orderBy(sql`weight`, 'desc')
-            .limit(100),
+            .limit(100)
+            // select TagListItem as "places"
+            .select((eb) =>
+              jsonArrayFrom(
+                eb
+                  .selectFrom('TagListItem')
+                  .whereRef('Album.artist', '=', 'TagListItem.albumArtist')
+                  .whereRef('Album.name', '=', 'TagListItem.albumName')
+                  .whereRef('TagListItem.tagName', '<>', 't.name')
+                  .select(['place', 'tagName'])
+                  .orderBy('place', 'asc'),
+              ).as('places'),
+            )
+            .select((eb) =>
+              jsonArrayFrom(
+                eb
+                  .selectFrom('AlbumTag')
+                  .innerJoin('Tag', 'AlbumTag.tagName', 'Tag.name')
+                  .whereRef('Album.artist', '=', 'AlbumTag.albumArtist')
+                  .whereRef('Album.name', '=', 'AlbumTag.albumName')
+                  .whereRef('AlbumTag.tagName', '<>', 't.name')
+                  .where('Tag.listUpdatedAt', 'is not', null)
+                  .select(['count', 'tagName'])
+                  .orderBy('count', 'desc'),
+              ).as('tags'),
+            ),
         ).as('list'),
       ])
       .select((eb) => [

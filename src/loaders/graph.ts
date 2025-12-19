@@ -11,7 +11,10 @@ export default function graphLoader(): Loader {
       try {
         const tagsWithRelated = await getGraph();
         context.logger.info(`${tagsWithRelated.length} returned`);
-        const graph = makeGraph(tagsWithRelated as WeightedTagWithRelated[]);
+        const graph = makeGraph(
+          tagsWithRelated as WeightedTagWithRelated[],
+          context.logger,
+        );
         context.store.set({
           id: 'music-universe',
           data: graph,

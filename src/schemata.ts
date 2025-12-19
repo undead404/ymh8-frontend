@@ -106,3 +106,7 @@ export const tagsIndexItemSchema = bareTagSchema.extend({
 });
 
 export type TagsIndexItem = z.infer<typeof tagsIndexItemSchema>;
+
+export interface Logger {
+  info: (message: string) => void;
+}

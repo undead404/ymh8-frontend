@@ -3,9 +3,12 @@ import louvain from 'graphology-communities-louvain';
 import force, { type ForceLayoutSettings } from 'graphology-layout-force';
 import { uniqBy } from 'lodash-es';
 
-import type { WeightedTagWithRelated } from '../schemata';
+import type { Logger, WeightedTagWithRelated } from '../schemata';
 
-export default function makeGraph(tags: WeightedTagWithRelated[]) {
+export default function makeGraph(
+  tags: WeightedTagWithRelated[],
+  logger: Logger = console,
+) {
   const relationships = uniqBy(
     tags.flatMap(({ name, related }) =>
       related.map(({ name: relatedName, weight }) => ({
@@ -20,7 +23,7 @@ export default function makeGraph(tags: WeightedTagWithRelated[]) {
   // 1. Ініціалізація графа
   const graph = new Graph();
 
-  console.log(`🔹 Починаємо обробку ${tags.length} жанрів...`);
+  logger.info(`🔹 Починаємо обробку ${tags.length} жанрів...`);
 
   // 2. Додавання вузлів (Жанрів)
   // Нормалізуємо розмір вузла, щоб популярні не перекривали все (логарифмічна шкала)
@@ -44,7 +47,7 @@ export default function makeGraph(tags: WeightedTagWithRelated[]) {
   }
 
   // 3. Додавання ребер (Зв'язків) з PRUNING (Обрізанням)
-  console.log("🔹 Будуємо зв'язки та фільтруємо слабкі...");
+  logger.info("🔹 Будуємо зв'язки та фільтруємо слабкі...");
 
   // Створюємо мапу зв'язків для швидкого доступу
   // Припустимо, rawRelationships це масив { source, target, weight }
@@ -100,11 +103,11 @@ export default function makeGraph(tags: WeightedTagWithRelated[]) {
     }
   });
 
-  console.log(`🔹 Додано ${edgesCount} оптимізованих ребер.`);
+  logger.info(`🔹 Додано ${edgesCount} оптимізованих ребер.`);
 
   // 4. Виявлення спільнот (Кластеризація для кольору)
   // Це автоматично додасть атрибут "community" кожному вузлу
-  console.log('🔹 Розфарбовуємо кластери (Louvain)...');
+  logger.info('🔹 Розфарбовуємо кластери (Louvain)...');
   louvain.assign(graph);
 
   // Мапа кольорів для спільнот
@@ -161,7 +164,7 @@ export default function makeGraph(tags: WeightedTagWithRelated[]) {
   });
 
   // 2. Запуск 3D фізики
-  console.log('🔹 Запуск 3D симуляції...');
+  logger.info('🔹 Запуск 3D симуляції...');
 
   force.assign(graph, {
     maxIterations: 1000, // Треба більше ітерацій для 3D
@@ -177,7 +180,7 @@ export default function makeGraph(tags: WeightedTagWithRelated[]) {
   });
 
   // 6. Експорт у JSON для фронтенду
-  console.log('🔹 Зберігаємо результат...');
+  logger.info('🔹 Зберігаємо результат...');
   // const output = graph.export(); // Експортує повний стан (з координатами x, y)
 
   const nodes = graph.mapNodes((key, attributes) => {
