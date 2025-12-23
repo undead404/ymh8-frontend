@@ -2,15 +2,16 @@ import type getTagList from '../database/get-tag-list';
 import useSortedReleases from '../hooks/use-sorted-releases';
 import slugify from '../utils/slugify';
 
+import AlbumTag from './AlbumTag';
 import Expandable from './Expandable';
 import { SortButton } from './SortButton';
 
-const Link = 'a';
 // 1. Define explicit types to decouple from DB implementation details
 export type Release = Awaited<ReturnType<typeof getTagList>>['list'][number];
 
 interface MusicReleasesTableProperties {
   releases: Release[];
+  self: string;
 }
 
 // 2. Configuration for columns to ensure header/body alignment
@@ -24,16 +25,9 @@ const COLUMNS = [
   { key: 'weight', label: 'Weight', className: 'w-24 text-right' },
 ] as const;
 
-// 3. Mathematical clamping for font size
-const calculateTagSize = (count: number): string => {
-  // Clamps font size between 0.75rem and 1.25rem based on count
-  // Formula: Size = Base + log10(count) * scaling_factor
-  const size = Math.min(1.25, Math.max(0.75, 0.75 + Math.log10(count) * 0.1));
-  return `${size}rem`;
-};
-
 export default function MusicReleasesTable({
   releases,
+  self,
 }: MusicReleasesTableProperties) {
   const { setSort, sortConfig, sortedReleases } = useSortedReleases(releases);
 
@@ -102,15 +96,12 @@ export default function MusicReleasesTable({
                   <Expandable
                     max={3}
                     items={album.tags.map((tag) => (
-                      <Link
+                      <AlbumTag
                         key={tag.tagName}
-                        href={`/tags/${slugify(tag.tagName)}`}
-                        className="inline-flex items-center rounded bg-blue-50 px-2 py-1 text-blue-700 ring-1 ring-inset ring-blue-700/10 hover:bg-blue-100"
-                        style={{ fontSize: calculateTagSize(tag.count) }}
-                        title={`${tag.tagName} (${tag.count})`}
-                      >
-                        {tag.tagName}
-                      </Link>
+                        count={tag.count}
+                        isSelf={tag.tagName === self}
+                        tagName={tag.tagName}
+                      />
                     ))}
                   />
                 </div>
@@ -121,14 +112,14 @@ export default function MusicReleasesTable({
                   <Expandable
                     max={3}
                     items={album.places.map((tag) => (
-                      <Link
+                      <a
                         key={tag.tagName}
                         href={`/tags/${slugify(tag.tagName)}#place-${tag.place}`}
                         className="inline-flex items-center rounded bg-gray-100 px-1.5 py-0.5 text-xs text-gray-600 ring-1 ring-inset ring-gray-500/10 hover:bg-gray-200"
                       >
                         {tag.tagName}{' '}
                         <span className="ml-1 text-gray-400">#{tag.place}</span>
-                      </Link>
+                      </a>
                     ))}
                   />
                 </div>

@@ -63,7 +63,9 @@
   },
   "scripts": {
     "astro": "astro",
-    "build": "astro check && NODE_OPTIONS=--max-old-space-size=8192 astro build",
+    "check": "astro check",
+    "build": "astro build",
+    "build:overkill": "NODE_OPTIONS=--max-old-space-size=16384 astro build",
     "codegen": "kysely-codegen",
     "deploy": "wrangler pages deploy ./dist --project-name=ymh8",
     "dev": "astro dev",

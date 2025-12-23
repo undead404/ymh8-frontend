@@ -110,7 +110,6 @@ export default function getTagBySlug(tagSlug: string) {
                   .innerJoin('Tag', 'AlbumTag.tagName', 'Tag.name')
                   .whereRef('Album.artist', '=', 'AlbumTag.albumArtist')
                   .whereRef('Album.name', '=', 'AlbumTag.albumName')
-                  .whereRef('AlbumTag.tagName', '<>', 't.name')
                   .where('Tag.listUpdatedAt', 'is not', null)
                   .select(['count', 'tagName'])
                   .orderBy('count', 'desc'),

@@ -27,13 +27,22 @@ export default function makeGraph(
 
   // 2. Додавання вузлів (Жанрів)
   // Нормалізуємо розмір вузла, щоб популярні не перекривали все (логарифмічна шкала)
-  // const MAX_POPULARITY = Math.max(...tags.map((g) => g.weight));
-  // const MIN_POPULARITY = Math.min(...tags.map((g) => g.weight));
-  const MIN_NODE_SIZE = 5;
-  const NODE_SCALE_FACTOR = 1.5; // Множник розміру
+  const MAX_POPULARITY = Math.max(...tags.map((g) => g.weight));
+  const MIN_POPULARITY = Math.min(...tags.map((g) => g.weight));
+  // const MIN_NODE_SIZE = 5;
+  // const NODE_SCALE_FACTOR = 1.5; // Множник розміру
+  // const NODE_SCALE_FACTOR = 1 / MIN_POPULARITY;
+  const MIN_ALLOWED_SIZE = 1;
+  const MAX_ALLOWED_SIZE = 10_000;
+  const NODE_SCALE_FACTOR =
+    (MAX_ALLOWED_SIZE - MIN_ALLOWED_SIZE) / (MAX_POPULARITY - MIN_POPULARITY);
+  // console.log('🔹 Максимальна популярність жанру:', MAX_POPULARITY);
+  console.log('🔹 Мінімальна популярність жанру:', MIN_POPULARITY);
+  console.log('🔹 Множник розміру вузла:', NODE_SCALE_FACTOR);
   // 1. Ініціалізація з Z-координатою
   for (const genre of tags) {
-    const size = Math.log(genre.weight + 1) * NODE_SCALE_FACTOR + MIN_NODE_SIZE;
+    // const size = Math.log(genre.weight + 1) * NODE_SCALE_FACTOR + MIN_NODE_SIZE;
+    const size = genre.weight * NODE_SCALE_FACTOR + MIN_ALLOWED_SIZE;
 
     graph.addNode(genre.name, {
       label: genre.name,

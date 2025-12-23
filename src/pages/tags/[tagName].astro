@@ -60,7 +60,7 @@ if (!tagList) {
         )
       }
       <p class="mb-6 text-gray-600">Click column headers to sort</p>
-      <MusicReleasesTable client:load releases={tagList.list} />
+      <MusicReleasesTable client:load releases={tagList.list} self={tagList.name} />
       <section class="mt-6 border-t border-gray-200 pt-4">
   <h2 class="mb-3 text-lg font-semibold text-gray-900">
     See related genres
