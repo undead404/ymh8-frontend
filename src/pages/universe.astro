@@ -1,4 +1,5 @@
 ---
+
 import { getCollection } from 'astro:content';
 
 import { MusicUniverse } from '../components/MusicUniverse';
@@ -7,6 +8,7 @@ import Layout from '../layouts/Layout.astro';
 import "@react-sigma/core/lib/style.css"
 
 const [graph] = await getCollection('tagsGraph');
+// await writeFile('./graph.json', JSON.stringify(graph))
 ---
 
 <Layout>
