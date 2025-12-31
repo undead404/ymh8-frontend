@@ -6,8 +6,11 @@ import { marked } from "marked";
 import MusicReleasesTable from "../../components/MusicReleasesTable";
 import getTagList from "../../database/get-tag-list";
 import Layout from "../../layouts/Layout.astro";
+import formatDate from "../../utils/format-date";
 import injectRelatedGenres from "../../utils/inject-related-genres";
 import slugify from "../../utils/slugify";
+
+import LastfmIcon from '../../assets/last-fm-svgrepo-com.svg';
 
 export const getStaticPaths = (async () => {
   const bareTags = await getCollection("tagsIndex");
@@ -27,14 +30,22 @@ if (!tagList) {
 ---
 
 <Layout>
-  <div class="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 p-8">
+  <div class="min-h-screen bg-linear-to-br from-gray-100 to-gray-200 p-8">
     <div class="mx-auto max-w-7xl">
-      <h1 class="mb-2 text-4xl font-bold text-gray-800">
+      <h1 class="mb-2 text-4xl font-bold text-gray-800 flex align-middle gap-10">
         {tagList.name}
+        <a
+          class="ml-auto justify-self-end"
+          href={`https://last.fm/tag/${tagList.name}`}
+          target="_blank"
+          title={`Open ${tagList.name} on Last.fm`}
+        >
+          <LastfmIcon class="max-h-10 max-w-10" />
+        </a>
       </h1>
       {
         tagList.description && (
-          <div class="mb-6 rounded-lg bg-white/60 p-4 shadow-sm" id="tag-description">
+          <div class="mb-6 rounded-lg bg-white/60 p-4 shadow-sm my-4 p-4 bg-slate-50 border-l-4 border-purple-500 rounded-r" id="tag-description">
             <style>
               #tag-description a{
                 color: blue;
@@ -46,6 +57,9 @@ if (!tagList) {
                 margin: 0.5rem 0;
               }
             </style>
+            <div class="text-xs text-slate-500 uppercase tracking-wide mb-1 flex items-center justify-between">
+            <span>Generated with Claude</span>
+          </div>
             <p
               set:html={marked(
                 injectRelatedGenres(
@@ -59,7 +73,14 @@ if (!tagList) {
           </div>
         )
       }
-      <p class="mb-6 text-gray-600">Click column headers to sort</p>
+      <div class="flex justify-between">
+        <p class="mb-6 text-gray-600">Click column headers to sort</p>
+        <p class="mb-6 text-gray-600">
+          List updated: <time datetime={tagList.listUpdatedAt!.toISOString()} title={tagList.listUpdatedAt!.toISOString()}>
+              {formatDate(tagList.listUpdatedAt!)}
+          </time>
+        </p>
+      </div>
       <MusicReleasesTable client:load releases={tagList.list} self={tagList.name} />
       <section class="mt-6 border-t border-gray-200 pt-4">
   <h2 class="mb-3 text-lg font-semibold text-gray-900">

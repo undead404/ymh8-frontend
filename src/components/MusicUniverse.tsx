@@ -2,12 +2,14 @@ import { useCallback, useRef, useState } from 'react';
 import ForceGraph3D, { type ForceGraphMethods } from 'react-force-graph-3d';
 import * as THREE from 'three';
 import SpriteText from 'three-spritetext';
+
 type Node = z.infer<typeof musicUniverseGraphSchema>['nodes'][0];
 const Link = 'a';
 
 import type { z } from 'astro/zod';
 
 import type { MusicUniverseGraph, musicUniverseGraphSchema } from '../schemata';
+import slugify from '../utils/slugify';
 
 export const MusicUniverse = ({ graph }: { graph: MusicUniverseGraph }) => {
   const fgReference = useRef<ForceGraphMethods>(null);
@@ -184,7 +186,7 @@ export const MusicUniverse = ({ graph }: { graph: MusicUniverseGraph }) => {
 
           <div style={{ display: 'flex', gap: '10px' }}>
             <Link
-              href={`/tags/${encodeURIComponent(selectedNode.id)}/`}
+              href={`/tags/${slugify(selectedNode.id)}/`}
               style={{
                 flex: 1,
                 padding: '10px',

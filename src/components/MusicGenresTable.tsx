@@ -131,7 +131,12 @@ export default function MusicGenresTable({ genres }: GenreListProperties) {
                       </div>
                     </td>
                     <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-600 tabular-nums">
-                      {formatDate(new Date(genre.data.listUpdatedAt))}
+                      <time
+                        dateTime={genre.data.listUpdatedAt}
+                        title={genre.data.listUpdatedAt}
+                      >
+                        {formatDate(new Date(genre.data.listUpdatedAt))}
+                      </time>
                     </td>
                   </tr>
                 ))}

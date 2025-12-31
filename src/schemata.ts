@@ -85,9 +85,12 @@ export const weightedAlbumSchema = z.object({
 export type WeightedAlbum = z.infer<typeof weightedAlbumSchema>;
 
 export const fullAlbumSchema = weightedAlbumSchema.extend({
+  itunesCheckedAt: z.string().datetime().nullable(),
+  pageUrl: z.string().url().nullable(),
   place: z.number().min(1).max(100),
   places: z.array(albumPlaceSchema),
   tags: z.array(albumTagSchema),
+  url: z.string().url().nullable(),
 });
 
 export type FullAlbum = z.infer<typeof fullAlbumSchema>;

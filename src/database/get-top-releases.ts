@@ -3,7 +3,7 @@ import { jsonArrayFrom } from 'kysely/helpers/postgres';
 
 import database from '.';
 
-export default function getTopAlbumsWithStats() {
+export default function getTopReleases() {
   return (
     database
       // 1. CTE: GlobalStats
@@ -17,6 +17,11 @@ export default function getTopAlbumsWithStats() {
       .with('TopAlbums', (qb) =>
         qb
           .selectFrom('Album')
+          .leftJoin('AlbumLink', (join) =>
+            join
+              .onRef('Album.artist', '=', 'AlbumLink.albumArtist')
+              .onRef('Album.name', '=', 'AlbumLink.albumName'),
+          )
           .where('hidden', 'is not', true)
           .select([
             'artist',
@@ -36,6 +41,9 @@ export default function getTopAlbumsWithStats() {
                 )
               )
             `.as('weight'),
+            'pageUrl',
+            'url',
+            'itunesCheckedAt',
           ])
           // Order by the alias 'weight'
           .orderBy(sql`weight`, 'desc')

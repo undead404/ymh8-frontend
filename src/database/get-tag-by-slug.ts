@@ -64,6 +64,11 @@ export default function getTagBySlug(tagSlug: string) {
                 // Link TagListItem and AlbumTag
                 .onRef('TagListItem.tagName', '=', 'AlbumTag.tagName'),
             )
+            .leftJoin('AlbumLink', (join) =>
+              join
+                .onRef('Album.artist', '=', 'AlbumLink.albumArtist')
+                .onRef('Album.name', '=', 'AlbumLink.albumName'),
+            )
             .where('hidden', 'is not', true)
             // Link subquery to the outer TagData row
             .whereRef('TagListItem.tagName', '=', 't.name')
@@ -88,6 +93,9 @@ export default function getTagBySlug(tagSlug: string) {
                   * "AlbumTag"."count"
                 )
               `.as('weight'),
+              'Album.itunesCheckedAt',
+              'AlbumLink.url',
+              'AlbumLink.pageUrl',
             ])
             .orderBy(sql`weight`, 'desc')
             .limit(100)
