@@ -8,13 +8,18 @@ export default function topReleasesLoader(): Loader {
       context.logger.info('start');
       try {
         const topReleases = await getTopReleases();
+        if (topReleases.length !== 100) {
+          throw new Error(
+            `Wrong number of top releases: ${topReleases.length}`,
+          );
+        }
         context.logger.info(`${topReleases.length} items returned`);
         let latestUpdatedAt = new Date(0);
         for (const record of topReleases) {
           context.store.set({
             data: record,
             digest: context.generateDigest(record),
-            id: `${record.artist} - ${record.name}`,
+            id: `${record.place}`,
           });
           if (
             record.statsUpdatedAt &&

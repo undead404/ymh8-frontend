@@ -4,6 +4,9 @@ import { getCollection } from 'astro:content';
 import MusicReleasesTable from '../components/MusicReleasesTable'
 import Layout from '../layouts/Layout.astro';
 const topReleases = await getCollection('topReleases');
+if(topReleases.length!==100) {
+  throw new Error('Wrong topReleases length: ' + topReleases.length)
+}
 ---
 
 <Layout>

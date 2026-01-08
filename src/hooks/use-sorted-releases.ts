@@ -1,3 +1,4 @@
+import { padEnd } from 'lodash-es';
 import { useCallback, useMemo, useState } from 'react';
 
 import type getTagList from '../database/get-tag-list';
@@ -33,7 +34,8 @@ export default function useSortedReleases(
   const sortedReleases = useMemo(() => {
     const sorted = [...releases];
     sorted.sort((a, b) => {
-      let aValue, bValue;
+      let aValue: undefined | number | string,
+        bValue: undefined | number | string;
 
       switch (sortConfig.key) {
         case 'artist': {
@@ -42,8 +44,11 @@ export default function useSortedReleases(
           break;
         }
         case 'date': {
-          aValue = a.date;
-          bValue = b.date;
+          const baseYear = sortConfig.direction === 'asc' ? '9999' : '0000';
+          const padding = sortConfig.direction === 'asc' ? '-99' : '-00';
+          aValue = padEnd(a.date ?? baseYear, 10, padding);
+          bValue = padEnd(b.date ?? baseYear, 10, padding);
+          // console.log(aValue, '?', bValue);
           break;
         }
         case 'place': {

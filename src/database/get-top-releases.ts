@@ -54,7 +54,7 @@ export default function getTopReleases() {
       .selectAll('ta')
       .select((eb) => [
         // Window function for "place"
-        sql<number>`ROW_NUMBER() OVER (ORDER BY "ta"."weight" DESC)`.as(
+        sql<number>`ROW_NUMBER() OVER (ORDER BY "ta"."weight" DESC)::INTEGER`.as(
           'place',
         ),
 
